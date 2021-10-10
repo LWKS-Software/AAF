@@ -716,7 +716,7 @@ HRESULT STDMETHODCALLTYPE
 
 	// Loop over all flavours recording the largest name's buffer size
 	aafUInt32 max = 0;
-	for (size_t i = 0; i < sizeof(kSupportedFlavours); i++)
+	for (size_t i = 0; i < kNumSupportedFlavours; i++)
 	{
 		// compute length of name in bytes including terminating NUL
 		aafUInt32 len = (wcsu8slen(kSupportedFlavours[i].name) + 1) *
@@ -740,7 +740,7 @@ HRESULT STDMETHODCALLTYPE
 	if (0 >= bufSize)
 		return AAFRESULT_INVALID_PARAM;
 
-	for (size_t i = 0; i < sizeof(kSupportedFlavours); i++)
+	for (size_t i = 0; i < kNumSupportedFlavours; i++)
 	{
 		if (flavour == kSupportedFlavours[i].flavour)
 		{
