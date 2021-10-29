@@ -67,6 +67,7 @@ typedef unsigned __int64       OMUInt64;
    || defined(OM_COMPILER_GCC_PPC64_LINUX) \
    || defined(OM_COMPILER_GCC_PPC_MACOSX) || defined(OM_COMPILER_MWERKS_PPC_MACOSX) \
    || defined(OM_COMPILER_GCC_INTEL_MACOSX) || defined(OM_COMPILER_GCC_X86_64_MACOSX) \
+   || defined(OM_COMPILER_GCC_ARM64_MACOSX) \
    || defined(OM_COMPILER_SGICC_MIPS_SGI) || defined(OM_COMPILER_GCC_MIPS_SGI) \
    || defined(OM_COMPILER_GCC_SPARC_SUNOS) \
    || defined(OM_COMPILER_GCC_INTEL_FREEBSD) || defined(OM_COMPILER_GCC_INTEL_OPENBSD) \

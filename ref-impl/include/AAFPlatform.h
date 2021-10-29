@@ -219,6 +219,18 @@
 #define COMPILER_GCC
 #define PLATFORM_GCC_X86_64_DARWIN
 
+/*
+ *  Compiler:   GNU C++
+ *  Processor:  arm64
+ *  OS:         MacOS 10 (Darwin)
+ */
+#elif defined(__GNUC__) && defined(__arm64__) && defined(__APPLE__) && defined(__APPLE_CC__)
+#define CPU_ARM
+#define OS_DARWIN
+#define OS_UNIX
+#define COMPILER_GCC
+#define PLATFORM_GCC_ARM64_DARWIN
+
 /*   
  *  Compiler:   Metrowerks CodeWarrior
  *  Processor:  PowerPC  
@@ -345,6 +357,7 @@ typedef wchar_t			aafCharacter;
 	|| defined(PLATFORM_GCC_POWERPC_DARWIN) \
 	|| defined(PLATFORM_GCC_INTEL_DARWIN) \
 	|| defined(PLATFORM_GCC_X86_64_DARWIN) \
+	|| defined(PLATFORM_GCC_ARM64_DARWIN) \
 	|| defined(PLATFORM_MWERKS_POWERPC_DARWIN) \
 	|| defined(PLATFORM_MIPSPRO_MIPS_IRIX) \
 	|| defined(PLATFORM_GCC_MIPS_IRIX) \

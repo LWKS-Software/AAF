@@ -318,7 +318,11 @@ void OMUnixDynamicLibrary::unload(void)
 
 #elif defined(OM_USE_CFBUNDLE_LOADER)
 
-#if defined(OM_COMPILER_GCC_PPC_MACOSX) || defined (OM_COMPILER_GCC_INTEL_MACOSX) || defined(OM_COMPILER_GCC_INTEL_X86_64_MACOSX) || (defined(OM_COMPILER_MWERKS_PPC_MACOSX) && (__MWERKS__ >= 0x3200))
+#if defined(OM_COMPILER_GCC_PPC_MACOSX) || \
+    defined(OM_COMPILER_GCC_INTEL_MACOSX) || \
+    defined(OM_COMPILER_GCC_INTEL_X86_64_MACOSX) || \
+    defined(OM_COMPILER_GCC_ARM64_MACOSX) || \
+    (defined(OM_COMPILER_MWERKS_PPC_MACOSX) && (__MWERKS__ >= 0x3200))
 // CodeWarrior 9 and later on Mac OS X
 #include <CoreFoundation/CoreFoundation.h>
 #else

@@ -17,10 +17,16 @@ Replace <CONFIG> below with either Debug or Release.
   > cmake --build . --config <CONFIG>
   > ctest -C
 
-(b) On MacOS:
+(b.1) On MacOS x86-64:
   $ mkdir -p out/build
   $ cd out/build
   $ cmake -G "Xcode" -DPLATFORM=clang7 -DARCH=x86_64 ../..
+  $ cmake --build .
+
+(b.2) On MacOS ARM64:
+  $ mkdir -p out/build
+  $ cd out/build
+  $ cmake -G "Xcode" -DPLATFORM=clang12 -DARCH=arm64 ../..
   $ cmake --build .
 
 (c) On Linux

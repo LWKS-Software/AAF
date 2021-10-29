@@ -75,7 +75,7 @@ typedef unsigned char BYTE;
 #else /* _MSC_VER */
 typedef unsigned long long UINT8;
 #endif /* _MSC_VER */
-typedef unsigned long UINT4;
+typedef unsigned int UINT4;
 typedef unsigned short UINT2;
 typedef unsigned char BYTE;
 
@@ -94,7 +94,7 @@ typedef signed __int64 SINT8;
 #else /* _MSC_VER */
 typedef signed long long SINT8;
 #endif /* _MSC_VER */
-typedef signed long SINT4;
+typedef signed int SINT4;
 typedef signed short SINT2;
 
 

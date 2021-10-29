@@ -71,6 +71,11 @@
 #define OM_COMPILER_GCC
 #define OM_OS_UNIX
 #define OM_OS_MACOSX
+#elif defined(__GNUC__) && defined(__arm64__) && defined(__APPLE__)
+#define OM_COMPILER_GCC_ARM64_MACOSX
+#define OM_COMPILER_GCC
+#define OM_OS_UNIX
+#define OM_OS_MACOSX
 #elif defined(__GNUC__) && defined(__mips__) && defined(__sgi__)
 #define OM_COMPILER_GCC_MIPS_SGI
 #define OM_COMPILER_GCC
