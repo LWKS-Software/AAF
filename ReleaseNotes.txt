@@ -12,7 +12,8 @@ Supported platforms
 
 This release has been tested on the following platforms:
 Windows 10, Visual Studio 2013
-MacOS 10.15.6 Catalina, Xcode 7
+MacOS 10.15.6 Catalina, x64-86, Xcode 7
+MacOS 11.6 Big Sur, ARM64, Xcode 12
 x86_64-Linux, Ubuntu Xenial, gcc 4.8
 
 Licensing
