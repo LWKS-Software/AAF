@@ -39,12 +39,12 @@
 
 #include <iostream>
 
-// Could have just used wstring, but the AAF SDK goes to the trouble of 
+// Could have just used wstring, but the AAF SDK goes to the trouble of
 // typedef'ing aafCharacter, so AxString follows that example.
 typedef ::std::basic_string<aafCharacter> AxString;
 typedef ::std::char_traits<aafCharacter> AxCharTraits;
 
-class AxProductIdentification 
+class AxProductIdentification
 {
  public:
 
@@ -58,9 +58,9 @@ class AxProductIdentification
     const aafUID_t& productID,
     const aafProductVersion_t& productVersion
     );
-    
+
   virtual ~AxProductIdentification();
-  
+
   const aafProductIdentification_t* getProductId() const;
 
   std::wostream& dump( std::wostream& os ) const;
@@ -72,7 +72,7 @@ class AxProductIdentification
 
   // private methods
   void init(  const aafUID_t& productID );
-    
+
   // private data
 
   /* The product ident has pointers to strings stored here. */
@@ -115,11 +115,11 @@ inline bool operator!=( const tagGUID& uidL, const tagGUID& uidR )
 bool operator==( const aafMobID_t& lhs, const aafMobID_t& rhs );
 bool operator<( const aafMobID_t& lhs, const aafMobID_t& rhs );
 
-// Preserve unique_ptr ownership semantics but add a size
+// Preserve shared_ptr ownership semantics but add a size
 // data member so that a buffer pointer and its size can travel
 // together.
 
-// FIXME - The unique_ptr data member is declared mutable because SGI's
+// FIXME - The shared_ptr data member is declared mutable because SGI's
 // compiler will not recognize the copy constructor and assignment
 // operator if the const declaration is not used.  This should be
 // fixed.  The copy constructor and assignment operator should not
@@ -133,7 +133,7 @@ public:
         {}
 
 	// Size should be be in units of sizeof(T).
-	AxBuffer( std::unique_ptr<T> ptr,  int size )
+	AxBuffer( std::shared_ptr<T> ptr,  int size )
 		: _ptr( ptr ),
 		  _size( size )
 	{}
@@ -162,13 +162,13 @@ public:
 	}
 
 	// Caller takes ownership at their discretion.
-	std::unique_ptr<T>& GetPtr()
+	std::shared_ptr<T>& GetPtr()
 	{
 		return _ptr;
 	}
 
 private:
-	mutable std::unique_ptr<T> _ptr;
+	mutable std::shared_ptr<T> _ptr;
 	int _size;
 };
 

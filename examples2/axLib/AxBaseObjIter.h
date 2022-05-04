@@ -49,11 +49,11 @@ public:
 
 	virtual ~AxBaseObjIterPrtcl() = 0;
 
-	virtual bool NextOne( std::unique_ptr<AxBaseObj>& ) = 0;
+	virtual bool NextOne( std::shared_ptr<AxBaseObj>& ) = 0;
 
 	virtual void Reset() = 0;
 
-	virtual std::unique_ptr<AxBaseObjIterPrtcl> Clone() = 0;
+	virtual std::shared_ptr<AxBaseObjIterPrtcl> Clone() = 0;
 };
 
 
@@ -76,7 +76,7 @@ public:
 	virtual ~AxBaseObjIter()
 	{}
 
-	virtual bool NextOne( std::unique_ptr<AxBaseObj>& ret )
+	virtual bool NextOne( std::shared_ptr<AxBaseObj>& ret )
 	{
 #if 0
 	  // This is, hopefully, only temporarily disabled.  It works
@@ -90,7 +90,7 @@ public:
 		bool rc;
 		rc = _iter.NextOne( typeSP );
 		if ( rc ) {
-			std::unique_ptr<AxBaseObj> apObj( new ObjType ( typeSP ) );
+			std::shared_ptr<AxBaseObj> apObj( new ObjType ( typeSP ) );
 			ret = apObj;
 			return true;
 		}
@@ -102,10 +102,10 @@ public:
 		_iter.Reset();
 	}
 
-	virtual std::unique_ptr<AxBaseObjIterPrtcl> Clone()
+	virtual std::shared_ptr<AxBaseObjIterPrtcl> Clone()
 	{
-		std::unique_ptr< IterType > iter( _iter.Clone() );
-		return std::unique_ptr<AxBaseObjIterPrtcl>(
+		std::shared_ptr< IterType > iter( _iter.Clone() );
+		return std::shared_ptr<AxBaseObjIterPrtcl>(
 			new AxBaseObjIter<IterType,ObjType,IAAFType>( *iter ) );
 	}
 
@@ -126,13 +126,13 @@ public:
 	~AxBaseSolitaryObjIter()
 	{}
 
-	virtual bool NextOne( std::unique_ptr<AxBaseObj>& ret )
+	virtual bool NextOne( std::shared_ptr<AxBaseObj>& ret )
 	{
 		if ( _done ) {
  		        return false;
 		}
 		else {
-			std::unique_ptr<AxBaseObj> apObj( new ObjType(_obj) );
+			std::shared_ptr<AxBaseObj> apObj( new ObjType(_obj) );
 			_done = true;
 			ret = apObj;
 			return true;
@@ -144,9 +144,9 @@ public:
 		_done = false;
 	}
 
-	virtual std::unique_ptr<AxBaseObjIterPrtcl> Clone()
+	virtual std::shared_ptr<AxBaseObjIterPrtcl> Clone()
 	{
-		std::unique_ptr<AxBaseObjIterPrtcl> iter (
+		std::shared_ptr<AxBaseObjIterPrtcl> iter (
 			new AxBaseSolitaryObjIter( _obj ) );
 		return iter;
 	}
@@ -161,21 +161,21 @@ private:
 
 class AxBaseRecordObjIter : public AxBaseObjIterPrtcl {
 public:
-	AxBaseRecordObjIter( std::unique_ptr< AxRecordIterator > );
+	AxBaseRecordObjIter( std::shared_ptr< AxRecordIterator > );
 	~AxBaseRecordObjIter();
 
-	virtual bool NextOne( std::unique_ptr<AxBaseObj>& ret );
+	virtual bool NextOne( std::shared_ptr<AxBaseObj>& ret );
 
 	virtual void Reset();
 
-	virtual std::unique_ptr<AxBaseObjIterPrtcl> Clone();
+	virtual std::shared_ptr<AxBaseObjIterPrtcl> Clone();
 
 private:
 	AxBaseRecordObjIter();
 	AxBaseRecordObjIter( const AxBaseRecordObjIter& );
 	AxBaseRecordObjIter& operator=( const AxBaseRecordObjIter& );
 
-	std::unique_ptr<AxRecordIterator> _axRecordIter;
+	std::shared_ptr<AxRecordIterator> _axRecordIter;
 };
 
 // AxBaseObjIterPrtcl for odd ball arrays
@@ -183,21 +183,21 @@ private:
 template <class TypeDef>
 class AxBaseArrayObjIter : public AxBaseObjIterPrtcl {
 public:
-	AxBaseArrayObjIter( std::unique_ptr< AxArrayIterator<TypeDef> > );
+	AxBaseArrayObjIter( std::shared_ptr< AxArrayIterator<TypeDef> > );
 	~AxBaseArrayObjIter();
 
-	virtual bool NextOne( std::unique_ptr<AxBaseObj>& ret );
+	virtual bool NextOne( std::shared_ptr<AxBaseObj>& ret );
 
 	virtual void Reset();
 
-	virtual std::unique_ptr<AxBaseObjIterPrtcl> Clone();
+	virtual std::shared_ptr<AxBaseObjIterPrtcl> Clone();
 
 private:
 	AxBaseArrayObjIter();
 	AxBaseArrayObjIter( const AxBaseArrayObjIter& );
 	AxBaseArrayObjIter& operator=( const AxBaseArrayObjIter& );
 
-	std::unique_ptr<AxArrayIterator<TypeDef> > _axArrayIter;
+	std::shared_ptr<AxArrayIterator<TypeDef> > _axArrayIter;
 };
 
 //=---------------------------------------------------------------------=
@@ -220,11 +220,11 @@ private:
 class AxBaseObjRecIter {
 public:
 	
-	AxBaseObjRecIter( std::unique_ptr< AxBaseObjIterPrtcl > root );
+	AxBaseObjRecIter( std::shared_ptr< AxBaseObjIterPrtcl > root );
 
 	virtual ~AxBaseObjRecIter();
 
-	bool NextOne( std::unique_ptr<AxBaseObj>& objRet, int& level );
+	bool NextOne( std::shared_ptr<AxBaseObj>& objRet, int& level );
 
 	void PopStack();
 
@@ -236,7 +236,7 @@ private:
 	AxBaseObjRecIter( const AxBaseObjRecIter& );
 	AxBaseObjRecIter& operator=( const AxBaseObjRecIter& );
 
-	void Push( std::unique_ptr< AxBaseObjIterPrtcl > );
+	void Push( std::shared_ptr< AxBaseObjIterPrtcl > );
 	void Pop();
 	AxBaseObjIterPrtcl& Top();
 	bool Empty();
@@ -247,7 +247,7 @@ private:
 	void HandlePropertyValueRecursion( AxPropertyValue& propVal );
 	void HandleRecordPropertyValueRecursion( AxRecordIterator::Pair& recPair );
 
-	std::unique_ptr< AxBaseObjIterPrtcl > _root;
+	std::shared_ptr< AxBaseObjIterPrtcl > _root;
 	std::deque< AxBaseObjIterPrtcl* > _deque;
 };
 
