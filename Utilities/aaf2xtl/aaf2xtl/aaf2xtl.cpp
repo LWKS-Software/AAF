@@ -173,7 +173,7 @@ int main( int argc, char** argv )
 #endif
 
 		std::ostream* pUnownedOutputStream = 0;
-		std::auto_ptr<std::ofstream> apOwnedOutputStream;
+		std::unique_ptr<std::ofstream> apOwnedOutputStream;
 		Aif2XtlXmlGen* pXtlGenerator = 0;
 
 		if ( true ) {
@@ -181,9 +181,9 @@ int main( int argc, char** argv )
 		  pUnownedOutputStream = &cout;
 		}
 		else {
-		  // We do own this one, so it goes in the owned auto_ptr.
+		  // We do own this one, so it goes in the owned unique_ptr.
 		  char* file = "c:\\tmp\\aaf2xtl.xtl";
-		  std::auto_ptr<std::ofstream> apTmp( new ofstream( "c:/tmp/aaf2xtl.xtl" ) );
+		  std::unique_ptr<std::ofstream> apTmp( new ofstream( "c:/tmp/aaf2xtl.xtl" ) );
 		  apOwnedOutputStream = apTmp;
 		  pUnownedOutputStream = apOwnedOutputStream.get();
 		}
@@ -194,10 +194,10 @@ int main( int argc, char** argv )
 													  comLibPath,
 													  &pXtlGenerator ) );
 		
-		// Pass ownership of pXtlGenerator to auto_ptr to
+		// Pass ownership of pXtlGenerator to unique_ptr to
 		// ensure exception safeness should CHECK_HRESULT
 		// throw an exception.
-		std::auto_ptr<Aif2XtlXmlGen> apXtlGenerator( pXtlGenerator );
+		std::unique_ptr<Aif2XtlXmlGen> apXtlGenerator( pXtlGenerator );
 		try {
  			pXtlGenerator = 0;
 			CHECK_HRESULT( apXtlGenerator->Execute( *pUnownedOutputStream, std::wcerr ) );

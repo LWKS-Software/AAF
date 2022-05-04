@@ -67,7 +67,7 @@ void MasterMobAdd::RunTest( CmdState& state, int argc, char** argv )
   CHECK_HRESULT( masmob->QueryInterface( IID_IAAFMob, ToVoid(&mob) ) );
   CHECK_HRESULT( masmob->Initialize() );
   
-  auto_ptr<wchar_t> mobName( ToWideString( name ) );
+  unique_ptr<wchar_t> mobName( ToWideString( name ) );
   
   CHECK_HRESULT( mob->SetName( mobName.get() ) );
   
@@ -137,7 +137,7 @@ void RenameMob::RunTest( CmdState& state, int argc, char** argv )
   IAAFSmartPointer<IAAFMob> mob;
   get_mob_throw_if_not_found( state, name, mob );
 
-  auto_ptr<wchar_t> wnew_name( ToWideString( new_name ) );
+  unique_ptr<wchar_t> wnew_name( ToWideString( new_name ) );
 
   CHECK_HRESULT( mob->SetName( wnew_name.get() ) );
 }
@@ -191,8 +191,8 @@ void AppendComment::RunTest( CmdState& state, int argc, char** argv )
   IAAFSmartPointer<IAAFMob> mob;
   get_mob_throw_if_not_found( state, name, mob );
 
-  auto_ptr<wchar_t> wcategory( ToWideString( category ) );
-  auto_ptr<wchar_t> wcomment( ToWideString( comment ) );
+  unique_ptr<wchar_t> wcategory( ToWideString( category ) );
+  unique_ptr<wchar_t> wcomment( ToWideString( comment ) );
 
   CHECK_HRESULT( mob->AppendComment( wcategory.get(), wcomment.get() ) );
 }
@@ -217,8 +217,8 @@ void RemoveComment::RunTest( CmdState& state, int argc, char** argv )
   IAAFSmartPointer<IAAFMob> mob;
   get_mob_throw_if_not_found( state, name, mob );
 
-  auto_ptr<wchar_t> wcategory( ToWideString( category ) );
-  auto_ptr<wchar_t> wcomment( ToWideString( comment ) );
+  unique_ptr<wchar_t> wcategory( ToWideString( category ) );
+  unique_ptr<wchar_t> wcomment( ToWideString( comment ) );
 
   IAAFSmartPointer<IAAFTaggedValue> taggedValue;
 
@@ -249,8 +249,8 @@ void FindComment::RunTest( CmdState& state, int argc, char** argv )
   IAAFSmartPointer<IAAFMob> mob;
   get_mob_throw_if_not_found( state, name, mob );
 
-  auto_ptr<wchar_t> wcategory( ToWideString( category ) );
-  auto_ptr<wchar_t> wcomment( ToWideString( comment ) );
+  unique_ptr<wchar_t> wcategory( ToWideString( category ) );
+  unique_ptr<wchar_t> wcomment( ToWideString( comment ) );
 
   IAAFSmartPointer<IAAFTaggedValue> taggedValue;
 
@@ -309,7 +309,7 @@ void CopyMob::RunTest( CmdState& state, int argc, char** argv )
 
   IAAFSmartPointer<IAAFMob> copiedMob;
 
-  auto_ptr<wchar_t> wcopiedName( ToWideString(copied_name) );
+  unique_ptr<wchar_t> wcopiedName( ToWideString(copied_name) );
   CHECK_HRESULT( mob->Copy( wcopiedName.get(), &copiedMob ) );
 }
 

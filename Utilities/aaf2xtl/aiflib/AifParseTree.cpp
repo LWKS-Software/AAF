@@ -33,7 +33,7 @@
 
 #include <AifParseTree.h>
 
-AifParseTree::AifParseTree(  std::auto_ptr<AifParseTreeNode> root )
+AifParseTree::AifParseTree(  std::unique_ptr<AifParseTreeNode> root )
 : _root( root )
 {}
 

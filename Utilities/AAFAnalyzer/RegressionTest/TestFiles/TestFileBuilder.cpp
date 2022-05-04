@@ -322,7 +322,7 @@ boost::shared_ptr<AxMob> TestFileBuilder::AddFileSource( const AxString& name, b
     AxWAVEDescriptor axFileDes( AxCreateInstance<IAAFWAVEDescriptor>( axDictionary ) );
 
     aafUInt8* buffer = new aafUInt8[ sizeof(aafUInt8[44]) ];
-    AxBuffer<aafUInt8> header = AxBuffer<aafUInt8>( std::auto_ptr<aafUInt8>( buffer ), sizeof( aafUInt8[44] ) );;
+    AxBuffer<aafUInt8> header = AxBuffer<aafUInt8>( std::unique_ptr<aafUInt8>( buffer ), sizeof( aafUInt8[44] ) );;
     axFileDes.SetSummary( header.GetSize(), header.GetPtr().get() );
 
     axFileDes.SetSampleRate( sampleRate );

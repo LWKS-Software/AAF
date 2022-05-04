@@ -58,7 +58,7 @@ AifSanteFeLoader::AifSanteFeLoader(const AxString& fileName,
 : _fileName( fileName )
 {
 	if ( initAAF && _instanceCount == 0) {
-		std::auto_ptr<AxInit> initObj( new AxInit( pAafComLib ) );
+		std::unique_ptr<AxInit> initObj( new AxInit( pAafComLib ) );
 		_initObj = initObj;
 	}
 
@@ -83,11 +83,11 @@ AifSanteFeLoader::~AifSanteFeLoader()
 #endif
 }
 
-std::auto_ptr<AifParseTree> AifSanteFeLoader::ParseFile( AifParseTreeNodeFactory& nodeFactory )
+std::unique_ptr<AifParseTree> AifSanteFeLoader::ParseFile( AifParseTreeNodeFactory& nodeFactory )
 {
 	AxMob axPrimaryMob( GetPrimaryMob() );
 	
-	return std::auto_ptr<AifParseTree>( 
+	return std::unique_ptr<AifParseTree>( 
 		new AifParseTree( AifBuildParseTree( axPrimaryMob, nodeFactory ) ) );
 }
 

@@ -147,7 +147,7 @@ public:
 
   // SampleSource methods
   virtual void Reset();
-  virtual std::auto_ptr< SampleSrcBuffer > GetNext();
+  virtual std::unique_ptr< SampleSrcBuffer > GetNext();
 
 private:
 	int _toneFrequency;
@@ -155,9 +155,9 @@ private:
 	int _count;
 	WaveHeader _waveHeader;
 
-	// auto_ptr so that we don't have to construct until
+	// unique_ptr so that we don't have to construct until
 	// Execute time.
-	std::auto_ptr<ToneGenerator> _toneGen;
+	std::unique_ptr<ToneGenerator> _toneGen;
 };
 
 
@@ -202,7 +202,7 @@ void ToneSource::Execute( const std::vector<AxString>& argv )
 		throw AxFGEx( L"Only mono support exists." );
 	}
 
-	_toneGen = std::auto_ptr<ToneGenerator>(
+	_toneGen = std::unique_ptr<ToneGenerator>(
 					new ToneGenerator( freqVal,
 					 				   _waveHeader.GetSampleRate(),
 									   levelVal,
@@ -217,13 +217,13 @@ void ToneSource::Reset()
 	_count = 0;
 }
 
-std::auto_ptr< SampleSrcBuffer > ToneSource::GetNext()
+std::unique_ptr< SampleSrcBuffer > ToneSource::GetNext()
 {
 	if ( 1 == _count ) {
-		return std::auto_ptr< SampleSrcBuffer >( new SimpleSampleSrcBuffer() );
+		return std::unique_ptr< SampleSrcBuffer >( new SimpleSampleSrcBuffer() );
 	}
 
-	std::auto_ptr<aafUInt8> buf( new aafUInt8[ _waveHeader.GetAudioDataSizeInBytes() ] );
+	std::unique_ptr<aafUInt8> buf( new aafUInt8[ _waveHeader.GetAudioDataSizeInBytes() ] );
 
 	// yikes... there's gotta be a better way...
 
@@ -263,7 +263,7 @@ std::auto_ptr< SampleSrcBuffer > ToneSource::GetNext()
 
 	_count++;
 
-	return std::auto_ptr< SampleSrcBuffer >(
+	return std::unique_ptr< SampleSrcBuffer >(
 		new SimpleSampleSrcBuffer( _waveHeader.GetNumSamples(),
 		  						   _waveHeader.GetAudioDataSizeInBytes(),
 								   buf ) );

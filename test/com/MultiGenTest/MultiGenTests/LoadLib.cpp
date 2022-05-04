@@ -52,7 +52,7 @@ void RegPlugins::RunTest( CmdState& state, int argc, char **argv )
 
   CHECK_HRESULT( AAFGetPluginManager(&mgr) );
 
-  auto_ptr<wchar_t> wpath( ToWideString(argv[1]) );
+  unique_ptr<wchar_t> wpath( ToWideString(argv[1]) );
 
   CHECK_HRESULT( mgr->RegisterPluginFile( wpath.get() ) );
 }

@@ -71,7 +71,7 @@ public:
 	// the CLSID passed to RemoveFactory must match the CLSID of the
 	// factory object you wish to remove.
 	// CLSID uniqueness is enforced by an assertion.
-	void AddFactory( std::auto_ptr<AxPluginFctryPrtcl> factory );
+	void AddFactory( std::unique_ptr<AxPluginFctryPrtcl> factory );
 	void RemoveFactory( const CLSID& clsid ); 
 
 	// Return the number of registered factory objects.

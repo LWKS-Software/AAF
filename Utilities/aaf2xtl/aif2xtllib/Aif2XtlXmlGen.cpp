@@ -114,12 +114,12 @@ Aif2XtlXmlGen::~Aif2XtlXmlGen()
   // last because it will unload the AAF library.
 
   {
-    std::auto_ptr<AifParseTree> null;
+    std::unique_ptr<AifParseTree> null;
     _apParseTree = null;
   }
 
   {
-    std::auto_ptr<AifSanteFeLoader> null;
+    std::unique_ptr<AifSanteFeLoader> null;
     _apLoader = null;
   }
 }
@@ -137,7 +137,7 @@ HRESULT Aif2XtlXmlGen::Execute( std::ostream& outStream, std::wostream& logStrea
 
 	// FIXME - Look up the com library in the registry, or relative
 	// to ARGV0
-    _apLoader = std::auto_ptr<AifSanteFeLoader>(
+    _apLoader = std::unique_ptr<AifSanteFeLoader>(
 		new AifSanteFeLoader( _inFileName.c_str(), _dllName.c_str(), true ) );
 
     Aif2XtlInit();

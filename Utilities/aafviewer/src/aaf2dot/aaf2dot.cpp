@@ -105,17 +105,17 @@ void DotExport( AxHeader& axHeader,
 
 
    // iterate through objects and map to Dot format
-   auto_ptr< AxBaseObjIterPrtcl > axHeaderIter(
+   unique_ptr< AxBaseObjIterPrtcl > axHeaderIter(
       new AxBaseSolitaryObjIter<AxHeader>(axHeader) );
    AxBaseObjRecIterExt recIter( axHeaderIter, &mapper );
-   pair<bool,auto_ptr<AxBaseObj> > next;
+   pair<bool,unique_ptr<AxBaseObj> > next;
    int level;
    for( next.first = recIter.NextOne( next.second, level ); next.first;
 	next.first = recIter.NextOne( next.second, level ) )
    {
       if ( dynamic_cast< AxObject* >( next.second.get() ) ) 
       {
-	 auto_ptr< AxObject > obj(
+	 unique_ptr< AxObject > obj(
 	    dynamic_cast< AxObject* >( next.second.release() ) );
 			
 	 bool popStack;
@@ -128,7 +128,7 @@ void DotExport( AxHeader& axHeader,
 
       else if ( dynamic_cast< AxProperty* >( next.second.get() ) ) 
       {
-	 auto_ptr< AxProperty > prop( 
+	 unique_ptr< AxProperty > prop( 
 	    dynamic_cast< AxProperty* >( next.second.release() ) );
 			
 	 bool popStack;
@@ -141,7 +141,7 @@ void DotExport( AxHeader& axHeader,
 
       else if ( dynamic_cast< AxPropertyValue* >( next.second.get() ) ) 
       {
-	 auto_ptr< AxPropertyValue > propVal(
+	 unique_ptr< AxPropertyValue > propVal(
 	    dynamic_cast< AxPropertyValue* >( next.second.release() ) );
 			
 	 bool popStack;
@@ -156,7 +156,7 @@ void DotExport( AxHeader& axHeader,
       else if ( dynamic_cast< AxBaseObjAny< AxRecordIterator::Pair >* >( next.second.get() ) )
       {
 	  
-	 auto_ptr< AxBaseObjAny< AxRecordIterator::Pair > > recPair(
+	 unique_ptr< AxBaseObjAny< AxRecordIterator::Pair > > recPair(
 	    dynamic_cast< AxBaseObjAny< AxRecordIterator::Pair >* >( next.second.release() ) );
 	  
 	 // records implemented on a case-by-case basis at the property iteration level 
@@ -165,7 +165,7 @@ void DotExport( AxHeader& axHeader,
 		
       else if ( dynamic_cast< AxBaseObjAny< AxExHResult >* >( next.second.get() ) ) 
       {
-	 auto_ptr< AxBaseObjAny< AxExHResult > > ex (
+	 unique_ptr< AxBaseObjAny< AxExHResult > > ex (
 	    dynamic_cast< AxBaseObjAny< AxExHResult >* >( next.second.release() ) );
 	  
 	 // 'any' objects not implemented
@@ -236,7 +236,7 @@ int renamePeskyOpaques( AxDictionary& axDict,
 {
    using namespace std;
 
-   pair<bool, auto_ptr< AxBaseObj > > next;
+   pair<bool, unique_ptr< AxBaseObj > > next;
 
    int count = 0;
    int level;
@@ -246,7 +246,7 @@ int renamePeskyOpaques( AxDictionary& axDict,
 
       if ( dynamic_cast<AxPropertyValue*>( next.second.get() ) ) {
 
-	 auto_ptr<AxPropertyValue> propVal(
+	 unique_ptr<AxPropertyValue> propVal(
 	    dynamic_cast<AxPropertyValue*>( next.second.release() ) );
 
 	 AxPropValueRenamePeskyOpaques axPropValueRenamePeskyOpaques( axDict );
@@ -360,7 +360,7 @@ int main( int argc, char** argv )
       AxDictionary axDictionary( axHeader.GetDictionary() );
 
       {
-	 auto_ptr< AxBaseObjIterPrtcl > axHeaderIter(
+	 unique_ptr< AxBaseObjIterPrtcl > axHeaderIter(
 	    new AxBaseSolitaryObjIter<AxHeader>(axHeader) );
 
 	 // Create a recursive iterator...

@@ -80,7 +80,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
           NodeFactory& nodeFactory,
     EdgeMap& edgeMap )
 {
-  auto_ptr<AxBaseObj> nextPtr;
+  unique_ptr<AxBaseObj> nextPtr;
   stack< pair<int, boost::shared_ptr<Node> > > parentStack;  
   int level = 0;
 
@@ -96,7 +96,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
   {
     if(dynamic_cast<AxObject*>(nextPtr.get()))
      {
-       auto_ptr<AxObject> obj(dynamic_cast<AxObject*>(nextPtr.release()));
+       unique_ptr<AxObject> obj(dynamic_cast<AxObject*>(nextPtr.release()));
 
        // This remains for debug.
        /*wcout << L"level = " << level << endl;
@@ -133,7 +133,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
         //have types that must be determined at runtime.  Therefore, stop
         //traversal on these properties.
         
-        auto_ptr<AxProperty> prop(dynamic_cast<AxProperty*>(nextPtr.release()));
+        unique_ptr<AxProperty> prop(dynamic_cast<AxProperty*>(nextPtr.release()));
         AxPropertyDef axPropDef( prop->GetDefinition() );
         AxTypeDef axTypeDef( axPropDef.GetTypeDef() );
         eAAFTypeCategory_t typeCategory = axTypeDef.GetTypeCategory();
@@ -161,7 +161,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
     // the underlying exception and rethrow it.
     else if ( dynamic_cast<AxBaseObjAny<AxExHResult>*>( nextPtr.get() ) ) {
       
-      auto_ptr< AxBaseObjAny<AxExHResult> > ex (
+      unique_ptr< AxBaseObjAny<AxExHResult> > ex (
        dynamic_cast<AxBaseObjAny<AxExHResult>*>( nextPtr.release() ) );
       
       // Copy it, and throw the copy.
@@ -210,7 +210,7 @@ const boost::shared_ptr<const AAFGraphInfo> GraphBuilder::CreateGraph(const AxSt
 
   // Initialize the recursive iterator.
   AxObject axRootObject( axHeader );
-  auto_ptr< AxBaseObjIterPrtcl >
+  unique_ptr< AxBaseObjIterPrtcl >
     axRootObjectIter( new AxBaseSolitaryObjIter<AxObject>(axRootObject) );
   AxBaseObjRecIter recIter( axRootObjectIter );
   

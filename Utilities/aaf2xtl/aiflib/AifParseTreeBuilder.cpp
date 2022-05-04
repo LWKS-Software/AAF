@@ -57,7 +57,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
 	using namespace std;
 
 	bool nextExists;
-	auto_ptr<AxBaseObj> nextPtr;
+	unique_ptr<AxBaseObj> nextPtr;
 	
 	AifParseTreeNode* pChild = 0;
 	int level = 0;
@@ -71,7 +71,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
 
 		if ( dynamic_cast<AxObject*>( nextPtr.get() ) ) {
 
-			auto_ptr<AxObject> obj( 
+			unique_ptr<AxObject> obj( 
 			 dynamic_cast<AxObject*>( nextPtr.release() ) );
 
 			 // wcout << L"level = " << level << endl;
@@ -81,7 +81,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
 
 			if ( accept( static_cast<IAAFObjectSP>(*obj) ) ) {
 
-				auto_ptr<AifParseTreeNode> childNode( nodeFactory.CreateNode( static_cast<IAAFObjectSP>(*obj) ) );
+				unique_ptr<AifParseTreeNode> childNode( nodeFactory.CreateNode( static_cast<IAAFObjectSP>(*obj) ) );
 				pChild = childNode.get();
 				parentStack.top().second->AddChild( childNode );
 
@@ -110,7 +110,7 @@ void BuildTree( AxBaseObjRecIter& recIter,
 		// who is trying to sort out the problem (with the AAF file, or SDK).
 		else if ( dynamic_cast<AxBaseObjAny<AxExHResult>*>( nextPtr.get() ) ) {
 
-			auto_ptr< AxBaseObjAny<AxExHResult> > ex (
+			unique_ptr< AxBaseObjAny<AxExHResult> > ex (
 				dynamic_cast<AxBaseObjAny<AxExHResult>*>( nextPtr.release() ) );
 
 			wcout << ex->get().what() << endl;
@@ -134,7 +134,7 @@ void AifBuildParseTree( IAAFObjectSP spSubTreeRootObject,
 	
 	AxObject axRootObject( spSubTreeRootObject );
 
-	std::auto_ptr< AxBaseObjIterPrtcl > axRootObjectIter(
+	std::unique_ptr< AxBaseObjIterPrtcl > axRootObjectIter(
 			new AxBaseSolitaryObjIter<AxObject>(axRootObject) );
 
 	AxBaseObjRecIter recIter( axRootObjectIter );
@@ -142,7 +142,7 @@ void AifBuildParseTree( IAAFObjectSP spSubTreeRootObject,
 	BuildTree( recIter, pParent, nodeFactory, acceptFunc );
 }
 
-std::auto_ptr<AifParseTreeNode> AifBuildParseTree( IAAFObjectSP spSubTreeRootObject,
+std::unique_ptr<AifParseTreeNode> AifBuildParseTree( IAAFObjectSP spSubTreeRootObject,
 						   AifParseTreeNodeFactory& nodeFactory,
 						   AifParseTreeBuilderAcceptFunc& acceptFunc )
 {

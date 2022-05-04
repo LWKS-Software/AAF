@@ -57,6 +57,6 @@ AifBuildParseTree( IAAFObjectSP spSubTreeRootObject,
 		   AifParseTreeBuilderAcceptFunc& acceptFunc = AifParseTreeBuilderAcceptAll() );
 
 
-std::auto_ptr<AifParseTreeNode> AifBuildParseTree( IAAFObjectSP spSubTreeRootObject,
+std::unique_ptr<AifParseTreeNode> AifBuildParseTree( IAAFObjectSP spSubTreeRootObject,
 						   AifParseTreeNodeFactory& nodeFactory,
 						   AifParseTreeBuilderAcceptFunc& acceptFunc = AifParseTreeBuilderAcceptAll() );

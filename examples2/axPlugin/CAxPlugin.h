@@ -41,7 +41,7 @@ class CAxPlugin : public IAAFPlugin
 {
 public:
 
-	CAxPlugin( std::auto_ptr<T> impl )
+	CAxPlugin( std::unique_ptr<T> impl )
 		: _impl( impl )
 	{}
 
@@ -106,7 +106,7 @@ private:
 	CAxPlugin( const CAxPlugin& );
 	CAxPlugin& operator&( const CAxPlugin& );
 
-	std::auto_ptr<T> _impl;
+	std::unique_ptr<T> _impl;
 };
 
 #endif

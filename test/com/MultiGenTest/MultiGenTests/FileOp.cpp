@@ -116,7 +116,7 @@ IAAFSmartPointer<IAAFFile> CreateFileOfKind( const std::string& fileName,
 					     const aafProductIdentification_t& prodId )
 #if 1
 {
-  std::auto_ptr<wchar_t> wfileName( ToWideString( fileName.c_str() ) );
+  std::unique_ptr<wchar_t> wfileName( ToWideString( fileName.c_str() ) );
 
   IAAFSmartPointer<IAAFRawStorage> spRawStorage;
   CHECK_HRESULT( AAFCreateRawStorageDisk( wfileName.get(),
@@ -144,7 +144,7 @@ IAAFSmartPointer<IAAFFile> CreateFileOfKind( const std::string& fileName,
 }
 #else
 {
-  std::auto_ptr<wchar_t> wfileName( ToWideString( fileName.c_str() ) );
+  std::unique_ptr<wchar_t> wfileName( ToWideString( fileName.c_str() ) );
 
   IAAFSmartPointer<IAAFFile> spFile;
 

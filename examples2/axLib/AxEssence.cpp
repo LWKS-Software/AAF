@@ -312,7 +312,7 @@ AxBuffer<aafUInt8> AxWAVEDescriptor::GetSummary()
 
 	CHECK_HRESULT( _spIaafWAVEDescriptor->GetSummary( size, buffer ) );
 
-	return AxBuffer<aafUInt8>( auto_ptr<aafUInt8>( buffer ), size );
+	return AxBuffer<aafUInt8>( unique_ptr<aafUInt8>( buffer ), size );
 }
 
 //=---------------------------------------------------------------------=

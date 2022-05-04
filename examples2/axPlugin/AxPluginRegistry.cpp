@@ -74,7 +74,7 @@ std::vector<AxPluginFctryPrtcl*>::iterator AxPluginRegistry::Find( const CLSID& 
 	return iter;
 }
 
-void AxPluginRegistry::AddFactory( std::auto_ptr<AxPluginFctryPrtcl> factory )
+void AxPluginRegistry::AddFactory( std::unique_ptr<AxPluginFctryPrtcl> factory )
 {
 	assert( Find( factory->GetClassID() ) == _factoryV.end() );	
 	

@@ -52,8 +52,8 @@ public:
 // when the object is destroyed.
 
 // Now then... we see the problems with declaring typedefs
-// that are pointers.  This: std::auto_ptr<aafDataBuffer_t>
-// ... won't work because auto_ptr stores and returns pointers
+// that are pointers.  This: std::unique_ptr<aafDataBuffer_t>
+// ... won't work because unique_ptr stores and returns pointers
 // to the templated class.  And what type underlies the aafDataBuffer_t.
 // gee whiz... I don't know... lets go digging in AAFTypes.h yet
 // again.  aafDataBuffer_t is a pointer to an aafUInt8...
@@ -66,12 +66,12 @@ public:
 	SimpleSampleSrcBuffer()
 	: _numSamples(0),
 	  _numBytes(0),
-	  _buffer( std::auto_ptr<aafUInt8>(0) )
+	  _buffer( std::unique_ptr<aafUInt8>(0) )
 	{}
 
 	SimpleSampleSrcBuffer( int numSamples,
 						   int numBytes,
-						   std::auto_ptr<aafUInt8> buffer )
+						   std::unique_ptr<aafUInt8> buffer )
 	: _numSamples( numSamples ),
 	  _numBytes( numBytes ),
 	  _buffer( buffer )
@@ -93,7 +93,7 @@ private:
 
 	int _numSamples;
 	int _numBytes;
-	std::auto_ptr<aafUInt8> _buffer;
+	std::unique_ptr<aafUInt8> _buffer;
 };
 
 
@@ -110,7 +110,7 @@ public:
 	
 	virtual void Reset() = 0;
 
-	virtual std::auto_ptr< SampleSrcBuffer > GetNext() = 0;
+	virtual std::unique_ptr< SampleSrcBuffer > GetNext() = 0;
 };
 
 

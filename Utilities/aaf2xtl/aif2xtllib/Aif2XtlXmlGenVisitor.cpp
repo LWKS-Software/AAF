@@ -125,7 +125,7 @@ bool SearchForDecoratedParent( Type*& pDecoration,
 // Finds the decorated parent, pops the decoration off the parent,
 // returns a pointer to decoration and pointer to the parent.
 template <class Type>
-bool SearchForDecoratedParent( auto_ptr<Type>& pDecoration,
+bool SearchForDecoratedParent( unique_ptr<Type>& pDecoration,
 							   AifParseTreeNode& node,
 							   AifParseTreeNode*& pParentRet )
 {
@@ -422,7 +422,7 @@ void Aif2XtlXmlGenVisitor::PreOrderVisit( Aif2XtlSequence& node )
 	// Then visit children looking for anything that will generate
 	// output.  If no ouput will be generated then don't ouput the
 	// <composite> XML element.
-	std::auto_ptr<CompositeDecoration> apCompDec( new CompositeDecoration );
+	std::unique_ptr<CompositeDecoration> apCompDec( new CompositeDecoration );
 	CompositeDecoration* pUnownedCompDec = apCompDec.get();
 	node.PushDecoration( apCompDec );
 
@@ -452,7 +452,7 @@ void Aif2XtlXmlGenVisitor::PreOrderVisit( Aif2XtlSequence& node )
 
 void Aif2XtlXmlGenVisitor::PostOrderVisit( Aif2XtlSequence& node )
 {
-  	std::auto_ptr<CompositeDecoration> pCompDec;
+  	std::unique_ptr<CompositeDecoration> pCompDec;
 	node.PopDecoration( pCompDec );
 
 	if ( !pCompDec->GetOutputPending() ) {
@@ -466,13 +466,13 @@ void Aif2XtlXmlGenVisitor::PostOrderVisit( Aif2XtlSequence& node )
 	// element.
 
 	AifParseTreeNode* pDecoratedParent = 0;
-	auto_ptr<Aif2XtlTransitionSequenceEditInfo> pTEditInfo(0);
+	unique_ptr<Aif2XtlTransitionSequenceEditInfo> pTEditInfo(0);
 	bool found = SearchForDecoratedParent( pTEditInfo, node, pDecoratedParent );
 	if ( found ) {
 
 		Aif2XtlTransitionInfo* pTransitionInfoUnowned = 0;
 		if ( pDecoratedParent->IsDecorated( pTransitionInfoUnowned ) ) {
-			auto_ptr<Aif2XtlTransitionInfo> pTransitionInfo(0);
+			unique_ptr<Aif2XtlTransitionInfo> pTransitionInfo(0);
 			pDecoratedParent->PopDecoration( pTransitionInfo );
 
 			Aif2XtlTimecode start( pTEditInfo->GetStartPosition(), pTEditInfo->GetEditRate() );
@@ -517,7 +517,7 @@ void Aif2XtlXmlGenVisitor::PreOrderVisit( Aif2XtlSourceMob& node )
 	Aif2XtlEssenceInfo* pDecorationUnowned;
 	if ( node.IsDecorated( pDecorationUnowned ) ) {
 
-		auto_ptr<Aif2XtlEssenceInfo> pEssInfo(0);
+		unique_ptr<Aif2XtlEssenceInfo> pEssInfo(0);
 		node.PopDecoration( pEssInfo );		
 
 		Level clip_l(++_level);
@@ -528,7 +528,7 @@ void Aif2XtlXmlGenVisitor::PreOrderVisit( Aif2XtlSourceMob& node )
 		
 
 		AifParseTreeNode* pDecoratedParent = 0;
-		auto_ptr<Aif2XtlSequenceEditInfo> pEditInfo(0);
+		unique_ptr<Aif2XtlSequenceEditInfo> pEditInfo(0);
 		bool found = SearchForDecoratedParent( pEditInfo, node, pDecoratedParent );
 		assert( found );
 		assert( pEditInfo.get() );
@@ -538,7 +538,7 @@ void Aif2XtlXmlGenVisitor::PreOrderVisit( Aif2XtlSourceMob& node )
 		// Find the unmastered source clip that made the
 		// original reference to this and recover the source
 		// reference.
-		auto_ptr<Aif2XtlUnMasteredSourceClipDecoration> pSrcClipDec(0);
+		unique_ptr<Aif2XtlUnMasteredSourceClipDecoration> pSrcClipDec(0);
 		AifParseTreeNode* pDecoratedSrcClipParent = 0;
 		SearchForDecoratedParent( pSrcClipDec, node, pDecoratedSrcClipParent );
 		assert( pDecoratedSrcClipParent );
@@ -582,10 +582,10 @@ void Aif2XtlXmlGenVisitor::PreOrderVisit( Aif2XtlSourceMob& node )
 		// node.  If so, then generate XTL for the transition.
 		Aif2XtlTransitionInfo* pTransitionInfoUnowned = 0;
 		if ( pDecoratedParent->IsDecorated( pTransitionInfoUnowned ) ) {
-			auto_ptr<Aif2XtlTransitionInfo> pTransitionInfo(0);
+			unique_ptr<Aif2XtlTransitionInfo> pTransitionInfo(0);
 			pDecoratedParent->PopDecoration( pTransitionInfo );
 
-			auto_ptr<Aif2XtlTransitionSequenceEditInfo> pTEditInfo(0);
+			unique_ptr<Aif2XtlTransitionSequenceEditInfo> pTEditInfo(0);
 			pDecoratedParent->PopDecoration( pTEditInfo );
 
 			Aif2XtlTimecode start( pTEditInfo->GetStartPosition(), pTEditInfo->GetEditRate() );

@@ -232,5 +232,5 @@ AxBuffer<aafUInt8> WaveHeader::GetHeader()
 	
 	memcpy( buffer, &_header, sizeof(_header) );
 
-	return AxBuffer<aafUInt8>( std::auto_ptr<aafUInt8>( buffer ), sizeof(_header) );
+	return AxBuffer<aafUInt8>( std::unique_ptr<aafUInt8>( buffer ), sizeof(_header) );
 }

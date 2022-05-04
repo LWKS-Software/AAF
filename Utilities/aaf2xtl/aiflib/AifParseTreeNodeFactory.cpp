@@ -39,8 +39,8 @@ AifParseTreeNodeFactory::AifParseTreeNodeFactory()
 AifParseTreeNodeFactory::~AifParseTreeNodeFactory()
 {}
 
-std::auto_ptr<AifParseTreeNode> AifParseTreeNodeFactory::CreateNode( IAAFObjectSP sp )
+std::unique_ptr<AifParseTreeNode> AifParseTreeNodeFactory::CreateNode( IAAFObjectSP sp )
 {
-	std::auto_ptr<AifParseTreeNode> pNode( new AifParseTreeNode(sp) );
+	std::unique_ptr<AifParseTreeNode> pNode( new AifParseTreeNode(sp) );
 	return pNode;
 }

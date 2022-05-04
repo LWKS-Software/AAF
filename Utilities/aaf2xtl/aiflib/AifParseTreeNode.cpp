@@ -81,7 +81,7 @@ void  AifParseTreeNode::SetParent( AifParseTreeNode* pParent )
 	_parent = pParent;
 }
 
-void AifParseTreeNode::AddChild( std::auto_ptr<AifParseTreeNode> pChild )
+void AifParseTreeNode::AddChild( std::unique_ptr<AifParseTreeNode> pChild )
 {
 	pChild->SetParent( this );
 	_children.push_back( pChild.release() );	
@@ -92,7 +92,7 @@ int AifParseTreeNode::GetNumChildren()
 	return _children.size();
 }
 
-std::auto_ptr<AifParseTreeNode> AifParseTreeNode::ReleaseChild( int i )
+std::unique_ptr<AifParseTreeNode> AifParseTreeNode::ReleaseChild( int i )
 {
 	// ... vector<> will erase an element, but only if we supply an iterator,
 	// not an index.
@@ -106,7 +106,7 @@ std::auto_ptr<AifParseTreeNode> AifParseTreeNode::ReleaseChild( int i )
 
 	assert( iter != _children.end() );
 
-	std::auto_ptr<AifParseTreeNode> node( _children[i] );
+	std::unique_ptr<AifParseTreeNode> node( _children[i] );
 
 	_children.erase( iter );
 
@@ -226,17 +226,17 @@ AifParseTreeNode::DecorationStackType& AifParseTreeNode::GetDecorationStack( con
 
 // Push decoration onto stack the maps to typeName.
 void AifParseTreeNode::PushDecoration( const char* typeName,
-				  std::auto_ptr<AifParseTreeNodeDecoration> pDecoration )
+				  std::unique_ptr<AifParseTreeNodeDecoration> pDecoration )
 {
 	GetDecorationStack(typeName, true).push( pDecoration.release() );
 }
 
 // Pop decoration off of stack that maps to typeName.
-std::auto_ptr<AifParseTreeNodeDecoration> AifParseTreeNode::PopDecoration( const char* typeName )
+std::unique_ptr<AifParseTreeNodeDecoration> AifParseTreeNode::PopDecoration( const char* typeName )
 {
 	DecorationStackType& stack = GetDecorationStack( typeName, false );
 	
-	std::auto_ptr<AifParseTreeNodeDecoration> pDecoration( stack.top() );
+	std::unique_ptr<AifParseTreeNodeDecoration> pDecoration( stack.top() );
 	stack.pop();
 
 	return pDecoration;

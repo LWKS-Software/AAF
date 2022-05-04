@@ -66,13 +66,13 @@ class StackMember
 class AxBaseObjRecIterExt
 {
   public:
-   AxBaseObjRecIterExt( std::auto_ptr< AxBaseObjIterPrtcl > root );
-   AxBaseObjRecIterExt( std::auto_ptr< AxBaseObjIterPrtcl > root,
+   AxBaseObjRecIterExt( std::unique_ptr< AxBaseObjIterPrtcl > root );
+   AxBaseObjRecIterExt( std::unique_ptr< AxBaseObjIterPrtcl > root,
 			AxBaseObjRecIterListener *listener);
 
    virtual ~AxBaseObjRecIterExt();
 
-   bool NextOne( std::auto_ptr<AxBaseObj>& objRet, int& level );
+   bool NextOne( std::unique_ptr<AxBaseObj>& objRet, int& level );
 
    void PopStack();
 
@@ -83,7 +83,7 @@ class AxBaseObjRecIterExt
    AxBaseObjRecIterExt( const AxBaseObjRecIterExt& );
    AxBaseObjRecIterExt& operator=( const AxBaseObjRecIterExt& );
 
-   void Push( std::auto_ptr< AxBaseObjIterPrtcl >i, int type );
+   void Push( std::unique_ptr< AxBaseObjIterPrtcl >i, int type );
    void Pop();
 
    AxBaseObjIterPrtcl& Top();
@@ -95,7 +95,7 @@ class AxBaseObjRecIterExt
    void HandlePropertyValueRecursion( AxPropertyValue& propVal );
    void HandleRecordPropertyValueRecursion( AxRecordIterator::Pair& recPair );
 
-   std::auto_ptr< AxBaseObjIterPrtcl > _root;
+   std::unique_ptr< AxBaseObjIterPrtcl > _root;
    std::deque< StackMember > _deque;
 
    AxBaseObjRecIterListener *_listener;

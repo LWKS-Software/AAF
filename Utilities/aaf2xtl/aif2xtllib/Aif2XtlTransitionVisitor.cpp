@@ -214,7 +214,7 @@ void Aif2XtlTransitionVisitor::PreOrderVisit( Aif2XtlTransition& node )
 
 	// Create a decoration with the transition info.  The sequence
 	// edit traveral (visitor) will use this information.
-	std::auto_ptr<Aif2XtlTransitionInfo> pTransitionInfo(
+	std::unique_ptr<Aif2XtlTransitionInfo> pTransitionInfo(
 		new Aif2XtlTransitionInfo( supported, length, cutPoint, xtlEffectUID ) );
 
 	// FIXME - Temporary fix to transition parameter gen issues.

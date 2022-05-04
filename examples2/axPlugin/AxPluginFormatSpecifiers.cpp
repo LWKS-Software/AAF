@@ -106,7 +106,7 @@ bool AxPluginUntypedFormatSpecifier::IsEqual( const aafUID_t& other )
 
 void AxPluginUntypedFormatSpecifier::SetValZero( int size )
 {
-	std::auto_ptr<aafUInt8> buf( new aafUInt8[ size ] );
+	std::unique_ptr<aafUInt8> buf( new aafUInt8[ size ] );
 	memset( buf.get(), 0, size );
 	SetValBuf( buf.get(), size );
 }

@@ -93,7 +93,7 @@ void write_video_samples( IAAFSmartPointer<IAAFEssenceAccess> access,
   while (numSamplesStillToWrite > 0) {
     
     const aafUInt32 numBytesPerSample = 2 * rect.xSize * rect.ySize;
-    auto_ptr<aafUInt8> pixels( new aafUInt8 [numBytesPerSample] );
+    unique_ptr<aafUInt8> pixels( new aafUInt8 [numBytesPerSample] );
     
     // TODO - Write some unique data into the buffer that can be
     // verified in a later test.  Probably will have to disable
@@ -139,7 +139,7 @@ void write_audio_samples( IAAFSmartPointer<IAAFEssenceAccess> access,
 
     const aafUInt32 numBytesPerSample = (MULTI_GEN_AUDIO_SAMPLE_BPP+7)/8;
     const aafUInt32 numBytesThisTime = numSamplesThisTime * numBytesPerSample;
-    auto_ptr<aafUInt8> pixels( new aafUInt8 [numBytesThisTime] );
+    unique_ptr<aafUInt8> pixels( new aafUInt8 [numBytesThisTime] );
     
     // TODO - Write some unique data into the buffer that can be
     // verified in a later test.  Probably will have to disable
@@ -273,7 +273,7 @@ void EssenceCreate::RunTest( CmdState& state, int argc, char** argv )
     CHECK_HRESULT( netLocator->Initialize() );
     CHECK_HRESULT( netLocator->QueryInterface( IID_IAAFLocator,
 					       ToVoid( &locator ) ) );
-    auto_ptr<wchar_t> wpath( ToWideString( file_path ) );
+    unique_ptr<wchar_t> wpath( ToWideString( file_path ) );
     CHECK_HRESULT( locator->SetPath( wpath.get() ) );
   }
   else {

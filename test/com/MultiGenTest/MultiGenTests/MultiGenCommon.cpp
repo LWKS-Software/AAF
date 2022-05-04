@@ -109,7 +109,7 @@ bool get_mob_by_name( IAAFSmartPointer<IAAFHeader> header,
   IAAFSmartPointer<IAAFMob> nextMob;
   HRESULT hr;
 
-  auto_ptr<wchar_t> wname( ToWideString( name ) );
+  unique_ptr<wchar_t> wname( ToWideString( name ) );
 
   for( hr = mobsEnumerator->NextOne( &nextMob );
        hr != AAFRESULT_NO_MORE_OBJECTS;
@@ -127,7 +127,7 @@ bool get_mob_by_name( IAAFSmartPointer<IAAFHeader> header,
 
     // Convert bufSize from bytes to wide char;
     bufSize = (bufSize+1)/2;
-    auto_ptr<wchar_t> buf( new wchar_t [ bufSize ] );
+    unique_ptr<wchar_t> buf( new wchar_t [ bufSize ] );
     CHECK_HRESULT( nextMob->GetName( buf.get(), sizeof(wchar_t)*bufSize ) );
 
     if ( wstrcmp(buf.get(), wname.get() ) ) {
@@ -203,7 +203,7 @@ bool find_comment( IAAFSmartPointer<IAAFMob> mob,
     CHECK_HRESULT( next->GetNameBufLen( &bufSize ) );
     // Convert bufSize from bytes to wide char;
     bufSize = (bufSize+1)/2;
-    auto_ptr<wchar_t> buf( new wchar_t [ bufSize ] );
+    unique_ptr<wchar_t> buf( new wchar_t [ bufSize ] );
     CHECK_HRESULT( next->GetName( buf.get(), sizeof(wchar_t)*bufSize ) );
 
     if ( !wstrcmp( buf.get(), category ) ) {
@@ -213,7 +213,7 @@ bool find_comment( IAAFSmartPointer<IAAFMob> mob,
     aafUInt32 valueSize;
     CHECK_HRESULT( next->GetValueBufLen( &valueSize ) );
     valueSize = (valueSize+1)/2;
-    auto_ptr<wchar_t> valBuf( new wchar_t [ valueSize ] );
+    unique_ptr<wchar_t> valBuf( new wchar_t [ valueSize ] );
     aafUInt32 actualBytesRead;
     CHECK_HRESULT( next->GetValue( sizeof(wchar_t)*valueSize,
 		   reinterpret_cast<aafDataBuffer_t>(valBuf.get()),

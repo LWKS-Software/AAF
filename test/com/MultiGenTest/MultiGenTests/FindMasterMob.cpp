@@ -88,7 +88,7 @@ void FindMasterMobs::RunTest( CmdState& state, int argc, char** argv )
     CHECK_HRESULT( nextMob->GetNameBufLen( &bufSize ) );
     // Convert bufSize from bytes to wide char;
     bufSize = (bufSize+1)/2;
-    auto_ptr<wchar_t> buf( new wchar_t [ bufSize ] );
+    unique_ptr<wchar_t> buf( new wchar_t [ bufSize ] );
     CHECK_HRESULT( nextMob->GetName( buf.get(), sizeof(wchar_t)*bufSize ) );
 
     for( i = 1; i < argc; i++ ) {
@@ -96,7 +96,7 @@ void FindMasterMobs::RunTest( CmdState& state, int argc, char** argv )
 	continue;
       }
 
-      auto_ptr<wchar_t> wideName( ToWideString( argv[i] ) );
+      unique_ptr<wchar_t> wideName( ToWideString( argv[i] ) );
       if ( wstrcmp( wideName.get(), buf.get() ) ) {
 	found[i] = true;
       }

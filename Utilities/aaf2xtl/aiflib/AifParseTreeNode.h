@@ -65,12 +65,12 @@ public:
 	AifParseTreeNode(IAAFObjectSP sp);
 	virtual ~AifParseTreeNode();
 
-	void AddChild( std::auto_ptr<AifParseTreeNode> pChild );
+	void AddChild( std::unique_ptr<AifParseTreeNode> pChild );
 
 	AifParseTreeNode* GetParent();
 
 	int  GetNumChildren();
-	std::auto_ptr<AifParseTreeNode> ReleaseChild( int i );
+	std::unique_ptr<AifParseTreeNode> ReleaseChild( int i );
 	AifParseTreeNode& GetChild( int i );
 
 	virtual void Visit( AifParseTreeVisitor* visitor );
@@ -117,27 +117,27 @@ public:
 
 	// Type must be a subclass of AifParseTreeNodeDecoration
 	template <class Type>
-	void PushDecoration( std::auto_ptr<Type> pDecoration )
+	void PushDecoration( std::unique_ptr<Type> pDecoration )
 	{
 		const type_info& info = typeid( Type );
 
-		std::auto_ptr<AifParseTreeNodeDecoration> pAifNodeDec( pDecoration.release() );
+		std::unique_ptr<AifParseTreeNodeDecoration> pAifNodeDec( pDecoration.release() );
 			
 		PushDecoration( info.raw_name(), pAifNodeDec );
 	}
 
 	template <class Type>
-	void PopDecoration( std::auto_ptr<Type>& pDecoration )
+	void PopDecoration( std::unique_ptr<Type>& pDecoration )
 	{
 		const type_info& info = typeid( Type );
 
-		std::auto_ptr<AifParseTreeNodeDecoration> pAifNodeDec = PopDecoration( info.raw_name() );
+		std::unique_ptr<AifParseTreeNodeDecoration> pAifNodeDec = PopDecoration( info.raw_name() );
 
 		Type* pType = dynamic_cast<Type*>( pAifNodeDec.release() );
 		
 		assert( pType );
 		
-		std::auto_ptr<Type> pDecorationRet( pType );
+		std::unique_ptr<Type> pDecorationRet( pType );
 
 		pDecoration = pDecorationRet;
 	}
@@ -158,10 +158,10 @@ private:
 	DecorationStackType& GetDecorationStack( const char* typeName, bool create_if_not_present );
 
 	// Push decoration onto stack that maps to typeName.
-	void PushDecoration( const char* typeName, std::auto_ptr<AifParseTreeNodeDecoration> pDecoration  );
+	void PushDecoration( const char* typeName, std::unique_ptr<AifParseTreeNodeDecoration> pDecoration  );
 
 	// Pop decoration off stack that maps to typeName.
-	std::auto_ptr<AifParseTreeNodeDecoration> PopDecoration( const char* typeName );
+	std::unique_ptr<AifParseTreeNodeDecoration> PopDecoration( const char* typeName );
 
 
 	AifParseTreeNode*			   _parent;

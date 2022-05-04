@@ -117,12 +117,12 @@ bool AxIterator<Type, EnumeratorType, AddrOfOperator>::NextOne( Type& ret )
 }
 
 template <class Type, class EnumeratorType, class AddrOfOperator>
-std::auto_ptr< std::vector< Type > > 
+std::unique_ptr< std::vector< Type > > 
 AxIterator<Type, EnumeratorType, AddrOfOperator>::Next( aafUInt32 count )
 {
 	aafUInt32 i;
 
-	std::auto_ptr< std::vector< Type > >
+	std::unique_ptr< std::vector< Type > >
 		typeV( new std::vector< Type > );
 
 	for( i = 0; i < count; i++ ) {
@@ -139,9 +139,9 @@ AxIterator<Type, EnumeratorType, AddrOfOperator>::Next( aafUInt32 count )
 }
 
 template <class Type, class EnumeratorType, class AddrOfOperator>
-std::auto_ptr< AxIterator<Type, EnumeratorType, AddrOfOperator> > AxIterator<Type, EnumeratorType, AddrOfOperator>::Clone()
+std::unique_ptr< AxIterator<Type, EnumeratorType, AddrOfOperator> > AxIterator<Type, EnumeratorType, AddrOfOperator>::Clone()
 {
-	std::auto_ptr< AxIterator<Type, EnumeratorType, AddrOfOperator> >
+	std::unique_ptr< AxIterator<Type, EnumeratorType, AddrOfOperator> >
 		pAxIterator( new AxIterator<Type, EnumeratorType, AddrOfOperator>( _spEnumerator ) ) ;
 
 	return pAxIterator;
@@ -181,9 +181,9 @@ void AxRecordIterator::Reset()
 	_current = 0;
 }
 
-std::auto_ptr<AxRecordIterator> AxRecordIterator::Clone()
+std::unique_ptr<AxRecordIterator> AxRecordIterator::Clone()
 {
-	std::auto_ptr<AxRecordIterator> clone(
+	std::unique_ptr<AxRecordIterator> clone(
 		new AxRecordIterator( _spPropVal, _spTypeDef ) );
 
 	clone->_current = _current;
@@ -240,9 +240,9 @@ void AxArrayIterator<TypeDef>::Reset()
 }
 
 template <class TypeDef>
-std::auto_ptr<AxArrayIterator<TypeDef> > AxArrayIterator<TypeDef>::Clone()
+std::unique_ptr<AxArrayIterator<TypeDef> > AxArrayIterator<TypeDef>::Clone()
 {
-	std::auto_ptr<AxArrayIterator> iter(
+	std::unique_ptr<AxArrayIterator> iter(
 		new AxArrayIterator<TypeDef>( _spTypeDef, _spPropVal ) );
 
 	iter->_current = _current;

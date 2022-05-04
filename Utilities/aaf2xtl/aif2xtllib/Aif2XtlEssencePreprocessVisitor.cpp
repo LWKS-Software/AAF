@@ -285,7 +285,7 @@ void EssenceProcessor::ProcessEssence()
     }
   }  
 
-  std::auto_ptr<Aif2XtlEssenceInfo> pDecoration(
+  std::unique_ptr<Aif2XtlEssenceInfo> pDecoration(
       new Aif2XtlEssenceInfo( fileRef ) );
   
   _node.PushDecoration( pDecoration );
@@ -339,7 +339,7 @@ void EssenceProcessor::ExtractEssence()
 	}
 
 	_fileRefName = fileName + wmCompatSuffix; 
-	std::auto_ptr<Aif2XtlExtractedEssenceInfo> pDecoration(
+	std::unique_ptr<Aif2XtlExtractedEssenceInfo> pDecoration(
 		new Aif2XtlExtractedEssenceInfo( _fileRefName ) );
 
 	_node.PushDecoration( pDecoration );
@@ -440,7 +440,7 @@ void EssenceProcessor::InsertFileSourceMob( IAAFSourceClipSP spSrcClip,
 
 	// Build tree routed in the new SourceMob.  Traverse that tree
 	// to find the source clip.
-	std::auto_ptr<AifParseTreeNode> newSrcMobTree =
+	std::unique_ptr<AifParseTreeNode> newSrcMobTree =
 		AifBuildParseTree( axNewMob, _nodeFactory );
 
 	FetchChild<Aif2XtlSourceClipNode, IAAFSourceClip> fetchSrcClip;

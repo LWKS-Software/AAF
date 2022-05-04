@@ -388,10 +388,10 @@ AxHrMap::AxHrMap()
 
 const AxHrMap& AxHrMap::getInstance()
 {
-	static std::auto_ptr< AxHrMap > instance;
+	static std::unique_ptr< AxHrMap > instance;
 
 	if ( !instance.get() ) {
-		instance = std::auto_ptr< AxHrMap >( new AxHrMap );
+		instance = std::unique_ptr< AxHrMap >( new AxHrMap );
 	}
 	
 	return *instance;

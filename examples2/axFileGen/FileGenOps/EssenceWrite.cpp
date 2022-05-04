@@ -66,7 +66,7 @@ void WriteEssence::Execute( const std::vector<AxString>& argv )
 	// FIXME - the busy indicator should not be implemented here...
 	// should be in axFileGen.cpp
 
-	std::auto_ptr<SampleSrcBuffer> buf;
+	std::unique_ptr<SampleSrcBuffer> buf;
 	src.Reset();
 	int count;
 	std::cout << " ";

@@ -63,7 +63,7 @@ void Aif2XtlGroupVisitor::PreOrderVisit( Aif2XtlCompMobNode& node )
 		// are shuffled down one position in the underlying vector.
 		// Hence if we release child zero numChildren times, we have
 		// released all the children.
-		std::auto_ptr<AifParseTreeNode> pChildNode = node.ReleaseChild(0);
+		std::unique_ptr<AifParseTreeNode> pChildNode = node.ReleaseChild(0);
 
 
 		if ( dynamic_cast<Aif2XtlTimelineMobSlot*>(pChildNode.get()) ){
@@ -100,20 +100,20 @@ void Aif2XtlGroupVisitor::PreOrderVisit( Aif2XtlCompMobNode& node )
 	for ( iter = unknownGroup.begin();
 		  iter != unknownGroup.end();
 		  ++iter ) {
-			  std::auto_ptr<AifParseTreeNode> pNode( *iter );
+			  std::unique_ptr<AifParseTreeNode> pNode( *iter );
 			  node.AddChild( pNode );
 	}
 		  
 	// Create an audio group node and reparent the audio nodes
 	if ( audioGroup.size() > 0 ) {
-		std::auto_ptr<AifParseTreeNode> pAudioGroupNode( new Aif2XtlGroupNode );
+		std::unique_ptr<AifParseTreeNode> pAudioGroupNode( new Aif2XtlGroupNode );
 		for ( iter = audioGroup.begin();
 			  iter != audioGroup.end();
 			++iter ) {
-				  std::auto_ptr<AifParseTreeNode> pNode( *iter );
+				  std::unique_ptr<AifParseTreeNode> pNode( *iter );
 				pAudioGroupNode->AddChild( pNode );
 		}
-		std::auto_ptr<Aif2XtlGroupInfo> pAudioGroupInfo(	
+		std::unique_ptr<Aif2XtlGroupInfo> pAudioGroupInfo(	
 					new Aif2XtlGroupInfo(Aif2XtlGroupInfo::GROUP_TYPE_AUDIO) );
 		pAudioGroupNode->PushDecoration( pAudioGroupInfo );
 		node.AddChild( pAudioGroupNode );
@@ -121,14 +121,14 @@ void Aif2XtlGroupVisitor::PreOrderVisit( Aif2XtlCompMobNode& node )
 
 	// Create a video group node and reparent the video nodes
 	if ( videoGroup.size() > 0 ) {
-		std::auto_ptr<AifParseTreeNode> pVideoGroupNode( new Aif2XtlGroupNode );
+		std::unique_ptr<AifParseTreeNode> pVideoGroupNode( new Aif2XtlGroupNode );
 		for ( iter = videoGroup.begin();
 			  iter != videoGroup.end();
 			++iter ) {
-				  std::auto_ptr<AifParseTreeNode> pNode( *iter );
+				  std::unique_ptr<AifParseTreeNode> pNode( *iter );
 				pVideoGroupNode->AddChild( pNode );
 		}
-		std::auto_ptr<Aif2XtlGroupInfo> pVideoGroupInfo(
+		std::unique_ptr<Aif2XtlGroupInfo> pVideoGroupInfo(
 			new Aif2XtlGroupInfo(Aif2XtlGroupInfo::GROUP_TYPE_VIDEO) );
 		pVideoGroupNode->PushDecoration( pVideoGroupInfo );
 		node.AddChild( pVideoGroupNode );

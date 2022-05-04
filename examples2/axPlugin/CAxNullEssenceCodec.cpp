@@ -63,7 +63,7 @@ public:
 
 	NullEssenceCodecRegister()
 	{
-		std::auto_ptr<AxPluginFctryPrtcl> nullEssenceCodecFctry(
+		std::unique_ptr<AxPluginFctryPrtcl> nullEssenceCodecFctry(
 			new AxPluginFctry<CAxNullEssenceCodec>( CLSID_CAxNullEssenceCodec ) );
 
 		AxPluginRegistry::GetInstance().AddFactory( nullEssenceCodecFctry );
@@ -106,8 +106,8 @@ const aafUID_t CAX_AAF_CODEC_MANUFACTURER_ID =
 //=---------------------------------------------------------------------=
 
 CAxNullEssenceCodec::CAxNullEssenceCodec( IUnknown* pUnkOuter )
-:  CAxEssenceCodec<AxImplNullEssenceCodec>( std::auto_ptr<AxImplNullEssenceCodec>( new AxImplNullEssenceCodec ) ),
-   CAxPlugin<AxImplPlugin>( std::auto_ptr<AxImplPlugin>( new AxImplPlugin ) ),
+:  CAxEssenceCodec<AxImplNullEssenceCodec>( std::unique_ptr<AxImplNullEssenceCodec>( new AxImplNullEssenceCodec ) ),
+   CAxPlugin<AxImplPlugin>( std::unique_ptr<AxImplPlugin>( new AxImplPlugin ) ),
    CAxUnknown( pUnkOuter )
 {
 	//

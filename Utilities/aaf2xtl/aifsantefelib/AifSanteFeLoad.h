@@ -48,7 +48,7 @@ public:
 
 	~AifSanteFeLoader();
 
-	std::auto_ptr<AifParseTree> ParseFile( AifParseTreeNodeFactory& factory );
+	std::unique_ptr<AifParseTree> ParseFile( AifParseTreeNodeFactory& factory );
 	IAAFHeaderSP GetHeader();
 
 private:
@@ -56,7 +56,7 @@ private:
 	IAAFMobSP GetPrimaryMob();
 
 	std::string _comLibPath;
-	std::auto_ptr<AxInit> _initObj;
+	std::unique_ptr<AxInit> _initObj;
 	AxString _fileName;
 	AxFile   _axFile;
 	static int _instanceCount;

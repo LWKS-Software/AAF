@@ -200,16 +200,16 @@ void Aif2XtlSeqEditVisitor::ProcessTransition(
 
 		Aif2XtlSequenceEditInfo* pSeqInfoAUnowned;
 		if ( !nodeA.IsDecorated( pSeqInfoAUnowned ) ) {
-			std::auto_ptr<Aif2XtlSequenceEditInfo> pSeqInfoA(
+			std::unique_ptr<Aif2XtlSequenceEditInfo> pSeqInfoA(
 				new Aif2XtlSequenceEditInfo(nodeAStart, nodeAEnd, 0, editRate ) );
 			nodeA.PushDecoration( pSeqInfoA );
 		}
 		
-        std::auto_ptr<Aif2XtlTransitionSequenceEditInfo> pSeqInfoB(
+        std::unique_ptr<Aif2XtlTransitionSequenceEditInfo> pSeqInfoB(
 				new Aif2XtlTransitionSequenceEditInfo(nodeBStart, nodeBEnd, 0, editRate ) );
 
 
-		std::auto_ptr<Aif2XtlSequenceEditInfo> pSeqInfoC(
+		std::unique_ptr<Aif2XtlSequenceEditInfo> pSeqInfoC(
 				new Aif2XtlSequenceEditInfo(nodeCStart, nodeCEnd, 0, editRate ) );
 
 
@@ -222,7 +222,7 @@ void Aif2XtlSeqEditVisitor::ProcessTransition(
 		// Aif2XtlTransitionInfo and Aif2XtlSequenceEditInfo are pushed onto Segment C.
 		// The Xml generation visitor expects this.
 
-		std::auto_ptr<Aif2XtlTransitionInfo> pTransInfoB;
+		std::unique_ptr<Aif2XtlTransitionInfo> pTransInfoB;
 		nodeB.PopDecoration( pTransInfoB );
 
 		nodeC.PushDecoration( pSeqInfoB );
@@ -249,12 +249,12 @@ void Aif2XtlSeqEditVisitor::ProcessTransition(
 
 		Aif2XtlSequenceEditInfo* pSeqInfoAUnowned;
 		if ( !nodeA.IsDecorated( pSeqInfoAUnowned ) ) {
-			std::auto_ptr<Aif2XtlSequenceEditInfo> pSeqInfoA(
+			std::unique_ptr<Aif2XtlSequenceEditInfo> pSeqInfoA(
 				new Aif2XtlSequenceEditInfo(nodeAStart, nodeAEnd, 0, editRate ) );
 			nodeA.PushDecoration( pSeqInfoA );
 		}
 
-		std::auto_ptr<Aif2XtlSequenceEditInfo> pSeqInfoC(
+		std::unique_ptr<Aif2XtlSequenceEditInfo> pSeqInfoC(
 				new Aif2XtlSequenceEditInfo(nodeCStart, nodeCEnd, pTransInfo->GetCutPoint(), editRate ) );
 
 		nodeC.PushDecoration( pSeqInfoC );
@@ -285,13 +285,13 @@ void Aif2XtlSeqEditVisitor::ProcessCut(
 
 	Aif2XtlSequenceEditInfo* pSeqInfoAUnowned;
 	if ( !nodeA.IsDecorated( pSeqInfoAUnowned ) ) {
-		std::auto_ptr<Aif2XtlSequenceEditInfo> pSeqInfoA(
+		std::unique_ptr<Aif2XtlSequenceEditInfo> pSeqInfoA(
 			new Aif2XtlSequenceEditInfo(nodeAStart, nodeAEnd, 0, editRate ) );
 
 		nodeA.PushDecoration( pSeqInfoA );
 	}
 
-	std::auto_ptr<Aif2XtlSequenceEditInfo> pSeqInfoB(
+	std::unique_ptr<Aif2XtlSequenceEditInfo> pSeqInfoB(
 			new Aif2XtlSequenceEditInfo(nodeBStart, nodeBEnd, 0, editRate ) );
 
 	nodeB.PushDecoration( pSeqInfoB );
@@ -310,7 +310,7 @@ void Aif2XtlSeqEditVisitor::ProcessSingle(
 	// Pick one of the nodes to get the edit rate.
 	aafRational_t editRate = GetEditRateFromParent( node );
 
-	std::auto_ptr<Aif2XtlSequenceEditInfo> pSeqInfo(
+	std::unique_ptr<Aif2XtlSequenceEditInfo> pSeqInfo(
 			new Aif2XtlSequenceEditInfo(nodeStart, nodeEnd, 0, editRate ) );
 
 	node.PushDecoration( pSeqInfo );

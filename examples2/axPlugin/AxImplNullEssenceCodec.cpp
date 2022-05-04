@@ -529,7 +529,7 @@ void AxImplNullEssenceCodec::PutEssenceFormat(
 	for (i = 0; i < numSpecifiers; i++ ) {
 
 		aafUID_t uid;
-		std::auto_ptr<aafUInt8> valBuf( new aafUInt8[ _maxValBufSize ] );
+		std::unique_ptr<aafUInt8> valBuf( new aafUInt8[ _maxValBufSize ] );
 		aafInt32 bytesRead;
 
 		CHECK_HRESULT(
@@ -574,7 +574,7 @@ void AxImplNullEssenceCodec::GetEssenceFormat(
 	for (i = 0; i < numSpecifiers; i++ ) {
 
 		aafUID_t uid;
-		std::auto_ptr<aafUInt8> valBuf( new aafUInt8( _maxValBufSize ) );
+		std::unique_ptr<aafUInt8> valBuf( new aafUInt8( _maxValBufSize ) );
 		aafInt32 bytesRead;
 
 		CHECK_HRESULT(

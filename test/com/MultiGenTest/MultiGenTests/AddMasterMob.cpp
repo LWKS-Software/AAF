@@ -74,7 +74,7 @@ void AddMasterMobs::RunTest( CmdState& state, int argc, char** argv )
     CHECK_HRESULT( masmob->QueryInterface( IID_IAAFMob, ToVoid(&mob) ) );
     CHECK_HRESULT( masmob->Initialize() );
 
-    auto_ptr<wchar_t> mobName( ToWideString( argv[i] ) );
+    unique_ptr<wchar_t> mobName( ToWideString( argv[i] ) );
     
     CHECK_HRESULT( mob->SetName( mobName.get() ) );
 

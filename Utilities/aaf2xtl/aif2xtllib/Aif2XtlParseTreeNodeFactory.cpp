@@ -79,7 +79,7 @@ Aif2XtlParseTreeNodeFactory::Aif2XtlParseTreeNodeFactory()
 Aif2XtlParseTreeNodeFactory::~Aif2XtlParseTreeNodeFactory()
 {}
 
-std::auto_ptr<AifParseTreeNode> Aif2XtlParseTreeNodeFactory::CreateNode( IAAFObjectSP spObject )
+std::unique_ptr<AifParseTreeNode> Aif2XtlParseTreeNodeFactory::CreateNode( IAAFObjectSP spObject )
 {
 	AxObject axObject( spObject );
 

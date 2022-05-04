@@ -53,11 +53,11 @@ public:
 	~Aif2XtlStandardNodeFactory()
 	{}
 
-	virtual std::auto_ptr<AifParseTreeNode> CreateNode( IAAFObjectSP spObj )
+	virtual std::unique_ptr<AifParseTreeNode> CreateNode( IAAFObjectSP spObj )
 	{
 		IAAFSmartPointer<IAAFType> sp;
 		AxQueryInterface( spObj, sp );
-		std::auto_ptr<AifParseTreeNode> node( new Aif2XtlNodeType( sp ) );
+		std::unique_ptr<AifParseTreeNode> node( new Aif2XtlNodeType( sp ) );
 		return node;
 	}
 };

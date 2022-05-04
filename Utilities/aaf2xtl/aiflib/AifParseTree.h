@@ -41,13 +41,13 @@ class AifParseTreeVisitorPtrcl;
 
 class AifParseTree {
 public:
-	AifParseTree( std::auto_ptr<AifParseTreeNode> root );
+	AifParseTree( std::unique_ptr<AifParseTreeNode> root );
 	~AifParseTree();
 
 	void Traverse( AifParseTreeVisitor* visitor );
 
 private:
-	std::auto_ptr<AifParseTreeNode> _root;	
+	std::unique_ptr<AifParseTreeNode> _root;	
 };
 
 

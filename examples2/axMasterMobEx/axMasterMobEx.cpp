@@ -289,7 +289,7 @@ public:
 		const int numSamples = GetNumSamplesPerChunk();  // frames
 		const int numBytes = GetSampleByteSize();
 
-		AxBuffer<aafUInt8> pixels( std::auto_ptr<aafUInt8>(new aafUInt8 [numBytes]), numBytes );
+		AxBuffer<aafUInt8> pixels( std::unique_ptr<aafUInt8>(new aafUInt8 [numBytes]), numBytes );
 
 		// Fill with random data.
 		unsigned i;
@@ -362,7 +362,7 @@ public:
 		
 		const int numBytes = numSamples * _bytesPerSample;
 
-		AxBuffer<aafUInt8> samples( std::auto_ptr<aafUInt8>(new aafUInt8 [numBytes]), numBytes );
+		AxBuffer<aafUInt8> samples( std::unique_ptr<aafUInt8>(new aafUInt8 [numBytes]), numBytes );
 
 		// Fill with random data.
 		unsigned i;
@@ -413,35 +413,35 @@ public:
 	int GetCountMultiplier()
 	{ return _multiplier; }
 
-	std::auto_ptr<EssenceLocator> CreateEssenceLocator()
+	std::unique_ptr<EssenceLocator> CreateEssenceLocator()
 	{
 	  using namespace std;
 		if ( _containerId == ContainerFile ) {
-			auto_ptr<EssenceLocator> networkLocatorPtr(
+			unique_ptr<EssenceLocator> networkLocatorPtr(
 				new NetworkEssenceLocator( _netlocPrefix, _netlocSuffix ) );
 			return networkLocatorPtr;
 		}
 		else {
-			auto_ptr<EssenceLocator> locatorPtr(
+			unique_ptr<EssenceLocator> locatorPtr(
 				new EssenceLocator() );
 			return locatorPtr;
 		}
 	}
 
-	std::auto_ptr<SampleSource> CreateSampleSource()
+	std::unique_ptr<SampleSource> CreateSampleSource()
 	{
 	  using namespace std;
 		// FIXME - Compression should be an option.  It is disabled here because
 		// it takes too long to compress images when running a test designed to
 		// write very large amounts of essense (i.e. many GB's)
 		if ( _source == "video" ) {
-			std::auto_ptr< SampleSource > sampleSource(
+			std::unique_ptr< SampleSource > sampleSource(
 				new VideoSampleSource( _videoWidth, _videoHeight, _videoBytesPerPixel, _rate,
 									   (int)_numSamples, kAAFCompressionDisable ) );
 			return sampleSource;
 		}
 		else if ( _source == "audio" ) {
-			std::auto_ptr< SampleSource > audioSource(
+			std::unique_ptr< SampleSource > audioSource(
 				new AudioSampleSource( _audioBitsPerSample,
 									   (_audioBitsPerSample+7)/8,
 									   _rate,
@@ -674,8 +674,8 @@ void create_mastermob_and_write_essence( AxHeader axHeader,
 										 CmdLineParser& cmdLineParser )
 {
         using namespace std;
-	auto_ptr<SampleSource> sampleSource = cmdLineParser.CreateSampleSource();
-	auto_ptr<EssenceLocator> essenceLocator = cmdLineParser.CreateEssenceLocator();
+	unique_ptr<SampleSource> sampleSource = cmdLineParser.CreateSampleSource();
+	unique_ptr<EssenceLocator> essenceLocator = cmdLineParser.CreateEssenceLocator();
 
 	AxDictionary axDictionary( axHeader.GetDictionary() );
 
@@ -695,7 +695,7 @@ void create_mastermob_and_write_essence( AxHeader axHeader,
 	aafRational_t sampleRate = sampleSource->GetRate();
 	aafRational_t editRate = sampleRate;
 
-	auto_ptr<AxEssenceAccess> axEssenceAccessPtr(
+	unique_ptr<AxEssenceAccess> axEssenceAccessPtr(
 		new  AxEssenceAccess(
 			axMasterMobEx.CreateEssence(
 				1,
@@ -739,7 +739,7 @@ void create_mastermob_and_write_essence( AxHeader axHeader,
 
 				axEssenceAccessPtr->CompleteWrite();
 
-				auto_ptr<AxEssenceAccess> axExtendedEssenceAccessPtr(
+				unique_ptr<AxEssenceAccess> axExtendedEssenceAccessPtr(
 					new  AxEssenceAccess(
 						axMasterMobEx.ExtendEssence(
 						1,
@@ -770,7 +770,7 @@ void open_mastermob_and_read_essence( AxHeader& axHeader,
 {
         using namespace std;
 
-	auto_ptr<SampleSource> sampleSource = cmdLineParser.CreateSampleSource();
+	unique_ptr<SampleSource> sampleSource = cmdLineParser.CreateSampleSource();
 
 	AxContentStorage axContentStorage( axHeader.GetContentStorage() );
 
@@ -842,7 +842,7 @@ void open_mastermob_and_read_essence( AxHeader& axHeader,
 
 	int numSamplesPerChunk = sampleSource->GetNumSamplesPerChunk();
 	int buflen = (int)maxSize * numSamplesPerChunk;
-	auto_ptr<char> buffer( new char [ buflen ] );
+	unique_ptr<char> buffer( new char [ buflen ] );
 
 	int numSamplesStillToRead = (int)numSamples;
 	

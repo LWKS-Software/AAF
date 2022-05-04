@@ -184,13 +184,13 @@ void Aif2XtlSourceClipVisitor::PreOrderVisit( Aif2XtlSourceClipNode& node )
 	// Decorate this node so that we can easily distingquish it from
 	// other source clips (i.e. master and chained source clips)
 	// later on.
-	std::auto_ptr<Aif2XtlUnMasteredSourceClipDecoration> pSrcClipDec
+	std::unique_ptr<Aif2XtlUnMasteredSourceClipDecoration> pSrcClipDec
 		( new Aif2XtlUnMasteredSourceClipDecoration );
 	node.PushDecoration( pSrcClipDec );
 
 	// Build a sub tree that includes only the referenced slot.
 	RejectUnreferencedSlots rejectAllSlotsButThisOne( srcRef.sourceSlotID );
-	std::auto_ptr<AifParseTreeNode> chainedSubTreeRoot 
+	std::unique_ptr<AifParseTreeNode> chainedSubTreeRoot 
 			= AifBuildParseTree( axReferencedMob,
 							     _nodeFactory,
 							     rejectAllSlotsButThisOne );
@@ -215,7 +215,7 @@ void Aif2XtlSourceClipVisitor::PostOrderVisit( Aif2XtlSourceClipNode& node )
 		// Decorate this node so that we can easily distingquish it from
 		// other source clips (i.e. master and chained source clips)
 		// later on.
-		std::auto_ptr<Aif2XtlUnMasteredSourceClipDecoration> pSrcClipDec
+		std::unique_ptr<Aif2XtlUnMasteredSourceClipDecoration> pSrcClipDec
 			( new Aif2XtlUnMasteredSourceClipDecoration );
 		node.PushDecoration( pSrcClipDec );
 	
@@ -223,7 +223,7 @@ void Aif2XtlSourceClipVisitor::PostOrderVisit( Aif2XtlSourceClipNode& node )
 
 		RejectUnreferencedSlots rejectAllSlotsButThisOne( srcRef.sourceSlotID );
 
-		std::auto_ptr<AifParseTreeNode> chainedSubTreeRoot 
+		std::unique_ptr<AifParseTreeNode> chainedSubTreeRoot 
 			= AifBuildParseTree( axReferencedMob,
 								 _nodeFactory,
 								 rejectAllSlotsButThisOne );
@@ -250,7 +250,7 @@ void Aif2XtlSourceClipVisitor::PostOrderVisit( Aif2XtlSourceClipNode& node )
 
 			RejectUnreferencedSlots rejectAllSlotsButThisOne( srcRef.sourceSlotID );
 
-			std::auto_ptr<AifParseTreeNode> chainedSubTreeRoot 
+			std::unique_ptr<AifParseTreeNode> chainedSubTreeRoot 
 				= AifBuildParseTree( axReferencedMob,
 						     _nodeFactory,
 						     rejectAllSlotsButThisOne );

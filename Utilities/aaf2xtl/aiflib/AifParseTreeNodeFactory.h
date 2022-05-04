@@ -45,7 +45,7 @@ public:
 	AifParseTreeNodeFactory();
 	virtual ~AifParseTreeNodeFactory();
 
-	virtual std::auto_ptr<AifParseTreeNode> CreateNode( IAAFObjectSP );
+	virtual std::unique_ptr<AifParseTreeNode> CreateNode( IAAFObjectSP );
 };
 
 #endif

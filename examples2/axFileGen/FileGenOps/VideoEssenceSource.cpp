@@ -271,7 +271,7 @@ public:
 
   // SampleSource methods
   virtual void Reset();
-  virtual std::auto_ptr< SampleSrcBuffer > GetNext();
+  virtual std::unique_ptr< SampleSrcBuffer > GetNext();
 
 private:
 	int _count;
@@ -379,12 +379,12 @@ void BarsSource::Reset()
 	_count = 0;
 }
 
-std::auto_ptr< SampleSrcBuffer > BarsSource::GetNext()
+std::unique_ptr< SampleSrcBuffer > BarsSource::GetNext()
 {
 	using namespace std;
 
 	if ( _count == _numFrames ) {
-		return auto_ptr<SampleSrcBuffer>( new SimpleSampleSrcBuffer() );
+		return unique_ptr<SampleSrcBuffer>( new SimpleSampleSrcBuffer() );
 	}
 
 	int numSamples = 1;
@@ -436,9 +436,9 @@ std::auto_ptr< SampleSrcBuffer > BarsSource::GetNext()
 			assert(0);
 	};
 
-	auto_ptr<aafUInt8> bufferToGiveUp( convertedBuf );
+	unique_ptr<aafUInt8> bufferToGiveUp( convertedBuf );
 	
-	auto_ptr<SampleSrcBuffer> srcBuffer(
+	unique_ptr<SampleSrcBuffer> srcBuffer(
 		new SimpleSampleSrcBuffer( numSamples, convertedBufSize, bufferToGiveUp ) );
 	
 	_count++;

@@ -104,9 +104,9 @@ class Aif2XtlXmlGen
   // AAF File.  Wide because that is what the SDK expects.
   std::basic_string<wchar_t> _inFileName;
 
-  std::auto_ptr<AifParseTree> _apParseTree;
+  std::unique_ptr<AifParseTree> _apParseTree;
 
-  std::auto_ptr<AifSanteFeLoader> _apLoader;
+  std::unique_ptr<AifSanteFeLoader> _apLoader;
 };
 
 #endif

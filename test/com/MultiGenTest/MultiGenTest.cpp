@@ -277,7 +277,7 @@ public:
   {
     MultiGenTestRegistry& registry = MultiGenTestRegistry::GetInstance();
     MultiGenTestFactory& factory = registry.GetFactory( GetArgV()[0] );
-    auto_ptr<MultiGenTest> test( factory.Create() );
+    unique_ptr<MultiGenTest> test( factory.Create() );
     test->RunTest( state, GetArgC(), GetArgV() );
   }
 };

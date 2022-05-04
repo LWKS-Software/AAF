@@ -62,7 +62,7 @@ void Aif2XtlObjectMarkForRemovalVisitor::PreOrderVisit( Aif2XtlTaggedValue& node
 	// with an Aif2XtlMarkForRemoveInfo.  A subsequent traveral
 	// searchs it's children and removes any that are decorated.
 
-	std::auto_ptr<Aif2XtlMarkForRemoveInfo> pMarkDecoration( new Aif2XtlMarkForRemoveInfo );
+	std::unique_ptr<Aif2XtlMarkForRemoveInfo> pMarkDecoration( new Aif2XtlMarkForRemoveInfo );
 
 	node.PushDecoration( pMarkDecoration );
 	
@@ -93,7 +93,7 @@ void Aif2XtlObjectRemoveMarkedVisitor::PreOrderVisit( Aif2XtlParseTreeNode& node
 		Aif2XtlMarkForRemoveInfo* pMark = 0;
 
 		if ( node.IsDecorated( pMark ) ) {
-			std::auto_ptr<AifParseTreeNode> pReleaseMe = node.ReleaseChild(i);
+			std::unique_ptr<AifParseTreeNode> pReleaseMe = node.ReleaseChild(i);
 			// This changes the count. The easiest way to handle that is to
 			// recurse to get the next marked child, then break.
 			PreOrderVisit(node);

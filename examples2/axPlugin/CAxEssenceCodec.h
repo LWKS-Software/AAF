@@ -42,7 +42,7 @@ class CAxEssenceCodec : public IAAFEssenceCodec
 {
 public:
 
-	CAxEssenceCodec( std::auto_ptr<T> impl )
+	CAxEssenceCodec( std::unique_ptr<T> impl )
 		: _impl( impl )
 	{}
 
@@ -294,7 +294,7 @@ public:
 	
 private:
 
-	std::auto_ptr<T> _impl;
+	std::unique_ptr<T> _impl;
 };
 
 #endif

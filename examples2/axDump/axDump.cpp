@@ -113,7 +113,7 @@ void dumpBaseObjects( AxDictionary& axDict,
 	using namespace std;
 
 	bool nextExists;
-	auto_ptr<AxBaseObj> nextPtr;
+	unique_ptr<AxBaseObj> nextPtr;
 
 	Level level(0);
 
@@ -159,7 +159,7 @@ void dumpBaseObjects( AxDictionary& axDict,
 		 if ( objectDump.first &&
 			  dynamic_cast<AxObject*>( nextPtr.get() ) ) {
 
-			auto_ptr<AxObject> obj( 
+			unique_ptr<AxObject> obj( 
 				 dynamic_cast<AxObject*>( nextPtr.release() ) );
 
 			wcout << formatItemCount(itemCount) << L"  " << level.get() << L"\tObject\t" << level <<
@@ -168,7 +168,7 @@ void dumpBaseObjects( AxDictionary& axDict,
 
 		else if ( dynamic_cast<AxProperty*>( nextPtr.get() ) ) {
 
-			auto_ptr<AxProperty> prop( 
+			unique_ptr<AxProperty> prop( 
 				 dynamic_cast<AxProperty*>( nextPtr.release() ) );
 
 			if ( not_verbose &&
@@ -189,7 +189,7 @@ void dumpBaseObjects( AxDictionary& axDict,
 		else if ( valueDump.first && 
 				  dynamic_cast<AxPropertyValue*>( nextPtr.get() ) ) {
 
-			auto_ptr<AxPropertyValue> propVal( 
+			unique_ptr<AxPropertyValue> propVal( 
 				 dynamic_cast<AxPropertyValue*>( nextPtr.release() ) );
 
 			AxPropertyValueDump axPropValueDump( std::wcout );
@@ -201,7 +201,7 @@ void dumpBaseObjects( AxDictionary& axDict,
 
 		else if ( dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.get() ) ) {
 
-			auto_ptr< AxBaseObjAny<AxRecordIterator::Pair> > recPair(
+			unique_ptr< AxBaseObjAny<AxRecordIterator::Pair> > recPair(
 				dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.release() ) );
 
 			if ( recordDump.first ) {
@@ -216,7 +216,7 @@ void dumpBaseObjects( AxDictionary& axDict,
 		}
 
 		else if ( dynamic_cast<AxBaseObjAny<AxExHResult>*>( nextPtr.get() ) ) {
-			auto_ptr< AxBaseObjAny<AxExHResult> > ex (
+			unique_ptr< AxBaseObjAny<AxExHResult> > ex (
 				dynamic_cast<AxBaseObjAny<AxExHResult>*>( nextPtr.release() ) );
 
 			wcout << formatItemCount(itemCount) << L"  " << level.get() << L"\tExcep\t" << level;
@@ -278,7 +278,7 @@ int renamePeskyOpaques( AxDictionary& axDict,
 	using namespace std;
 
 	bool nextExists;
-	auto_ptr<AxBaseObj> nextPtr;
+	unique_ptr<AxBaseObj> nextPtr;
 	Level level(0);
 
 	int count = 0;
@@ -289,7 +289,7 @@ int renamePeskyOpaques( AxDictionary& axDict,
 
 		if ( dynamic_cast<AxPropertyValue*>( nextPtr.get() ) ) {
 
-			auto_ptr<AxPropertyValue> propVal( 
+			unique_ptr<AxPropertyValue> propVal( 
 				 dynamic_cast<AxPropertyValue*>( nextPtr.release() ) );
 
 			AxPropValueRenamePeskyOpaques axPropValueRenamePeskyOpaques( axDict );
@@ -357,7 +357,7 @@ int main( int argc, char* argv[] )
 		// to access its properties.
 		
 		{
-			auto_ptr< AxBaseObjIterPrtcl > axHeaderIter(
+			unique_ptr< AxBaseObjIterPrtcl > axHeaderIter(
 				new AxBaseSolitaryObjIter<AxHeader>(axHeader) );
 
 			// Create a recursive iterator...
@@ -372,7 +372,7 @@ int main( int argc, char* argv[] )
 		}
 		
 		{
-			auto_ptr< AxBaseObjIterPrtcl > axHeaderIter(
+			unique_ptr< AxBaseObjIterPrtcl > axHeaderIter(
 			new AxBaseSolitaryObjIter<AxHeader>(axHeader) );
 
 		    // Create a recursive iterator...

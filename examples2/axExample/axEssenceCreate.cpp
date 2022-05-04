@@ -204,10 +204,10 @@ void AddImageEssence( AxMasterMob& masterMob,
 	const aafUInt32 numBytes = numSamples * rect.xSize * rect.ySize * 2;
 
 	// Normally, one shouldn't place an array pointer inside an
-	// auto_ptr.  In this case we get a way with it because it is
+	// unique_ptr.  In this case we get a way with it because it is
 	// simply an array of ints (i.e. no per-element destructor to
 	// call).
-	std::auto_ptr<aafUInt8> pixels( new aafUInt8 [numBytes] );
+	std::unique_ptr<aafUInt8> pixels( new aafUInt8 [numBytes] );
 
 	// Load pixels buffer with meaning full data here.
 

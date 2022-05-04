@@ -91,13 +91,13 @@ public:
 
 	bool NextOne( Type& );
 
-	std::auto_ptr< std::vector< Type > > Next( aafUInt32 count );
+	std::unique_ptr< std::vector< Type > > Next( aafUInt32 count );
 
 	void Reset();
 
 	void Skip( aafUInt32 count );
 
-	std::auto_ptr< AxIterator<Type, EnumeratorType, AddrOfOperator> > Clone();	
+	std::unique_ptr< AxIterator<Type, EnumeratorType, AddrOfOperator> > Clone();	
 
 private:
 
@@ -213,7 +213,7 @@ public:
 
 	void Reset();
 
-	std::auto_ptr<AxRecordIterator> Clone();
+	std::unique_ptr<AxRecordIterator> Clone();
 
 private:
 	AxRecordIterator();
@@ -251,7 +251,7 @@ public:
 
 	void Reset();
 
-	std::auto_ptr< AxArrayIterator<TypeDef> > Clone();
+	std::unique_ptr< AxArrayIterator<TypeDef> > Clone();
 	
 private:
 
