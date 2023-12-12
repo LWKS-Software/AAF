@@ -202,7 +202,7 @@ void OMBufferedIStream::read(OMByte* bytes,
 
   // HACK ALERT - Accomodate any variety of int and long incompatibility
   ULONG tempLong=static_cast<ULONG>(bytesRead);
-#if defined(OM_DEBUG)
+#if defined(PARAMETER_VALIDATION)
   HRESULT status = 
 #endif
   _stream->Read(bytes, byteCount, &tempLong);
@@ -222,7 +222,7 @@ void OMBufferedIStream::write(const OMByte* bytes,
 
   // HACK ALERT for GCC/Linux - Accomodate any variety of int and long incompatibility
   ULONG tempLong=static_cast<ULONG>(bytesWritten);
-#if defined(OM_DEBUG)
+#if defined(PARAMETER_VALIDATION)
   HRESULT status = 
 #endif
   _stream->Write(bytes, byteCount, &tempLong);
