@@ -3501,7 +3501,7 @@ static void convert(char* cName, size_t length, const wchar_t* name)
   PRECONDITION("Valid output buffer", cName != 0);
   PRECONDITION("Valid output buffer size", length > 0);
 
-#if defined(OM_DEBUG)
+#if defined(PARAMETER_VALIDATION)
   size_t status =
 #endif
   wcstombs(cName, name, length);
