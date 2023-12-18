@@ -326,7 +326,8 @@ OMXMLReaderExpat::next()
 
             if (ret == XML_STATUS_ERROR)
             {
-                throw OMException(getErrorString());
+               _status = false;
+               //throw OMException(getErrorString());
             }
 
             if (_status)
