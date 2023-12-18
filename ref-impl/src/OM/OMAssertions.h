@@ -66,7 +66,9 @@ public:
   //   @parm The name not to define.
 #define NNAME(name)
 
-#if defined(OM_DEBUG)
+// ensure we have paramerter validation and exception handling in release builds (instead of jsut crashing)
+#define PARAMETER_VALIDATION
+#if defined(PARAMETER_VALIDATION)
 
 #include "OMDataTypes.h"
 
