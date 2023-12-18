@@ -1038,10 +1038,13 @@ void OMStrongReferenceVectorProperty<ReferencedObject>::deepCopyTo(
     VectorElement& element = iterator.value();
     OMStorable* source = element.getValue();
     ASSERT("Valid source", source != 0);
-    OMStorable* d = source->shallowCopy(factory);
-    dest->insertObject(d);
-    d->onCopy(clientContext);
-    source->deepCopyTo(d, clientContext, deferStreamData);
+    if (source)
+    {
+       OMStorable* d = source->shallowCopy(factory);
+       dest->insertObject(d);
+       d->onCopy(clientContext);
+       source->deepCopyTo(d, clientContext, deferStreamData);
+    }
   }
 }
 
