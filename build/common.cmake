@@ -31,7 +31,7 @@
 #
 ###############################################################################
 
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.6.0)
 
 if(NOT DEFINED AAFSDK_ROOT)
     message(FATAL_ERROR "'AAFSDK_ROOT' must be set.")
