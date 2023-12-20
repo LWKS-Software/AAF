@@ -36,7 +36,7 @@
 
 #include "OMAssertions.h"
 
-#if defined (PARAMETER_VALIDATION)
+#if defined (OM_PARAMETER_VALIDATION)
 
 #include "OMOStream.h"
 #include "OMUtilities.h"

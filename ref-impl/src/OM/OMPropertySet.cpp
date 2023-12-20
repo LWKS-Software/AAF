@@ -89,7 +89,7 @@ OMProperty* OMPropertySet::get(const OMPropertyId propertyId) const
   PRECONDITION("Property is allowed", isAllowed(propertyId));
   PRECONDITION("Property is present", isPresent(propertyId));
 
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   bool status = find(propertyId, result);
 #endif
   find(propertyId, result);
@@ -255,7 +255,7 @@ OMProperty* OMPropertySet::getDynamicBuiltin(const OMUniqueObjectIdentification&
   TRACE("OMPropertySet::getDynamicBuiltin");
   OMProperty* result = 0;
 
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   bool status = 
 #endif
   _dynamicSet.find(propertyUId, result);
@@ -282,7 +282,7 @@ void OMPropertySet::finaliseDynamicBuiltin(const OMUniqueObjectIdentification& p
 
   OMProperty* property = getDynamicBuiltin(propertyUId);
   
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   bool result = 
 #endif
   _dynamicSet.remove(propertyUId);

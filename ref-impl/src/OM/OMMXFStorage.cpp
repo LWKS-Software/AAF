@@ -1046,7 +1046,7 @@ void OMMXFStorage::readHeaderPartition(void)
 {
   TRACE("OMMXFStorage::readHeaderPartition");
 
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   OMUInt64 length = readKLVLength();
 #else
   readKLVLength();
@@ -1652,7 +1652,7 @@ void OMMXFStorage::restoreObjectDirectory(OMUInt64 headerOffset)
 
   OMUInt64 entries;
   OMUInt8 entrySize;
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   OMUInt64 setLength = readKLVLength();
   ASSERT("Valid length", setLength > sizeof(entries) + sizeof(entrySize));
 #else

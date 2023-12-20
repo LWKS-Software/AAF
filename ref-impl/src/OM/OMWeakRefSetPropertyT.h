@@ -312,7 +312,7 @@ OMWeakReferenceSetProperty<Key, ReferencedObject>::remove(
   PRECONDITION("Object is present", contains(identification));
 
   SetElement* element = 0;
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   bool found =
 #endif
   _set.find(identification, &element);

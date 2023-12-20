@@ -1009,7 +1009,7 @@ OMRootStorable* OMSSStoredObject::restore(OMFile& file)
 
   root->restoreContents();
 
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   OMDictionary *metaDictionary =
 #endif
   root->dictionary();
@@ -2393,7 +2393,7 @@ void OMSSStoredObject::read(OMPropertyId ANAME(propertyId),
   PRECONDITION("Valid data", start != 0);
   PRECONDITION("Valid size", size > 0);
 
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   // Consistency check - look up propertyId in _index and check that
   // the property type is the expected (passed in) type, and that the
   // property length is the expected (passed in as size) length.
@@ -3501,7 +3501,7 @@ static void convert(char* cName, size_t length, const wchar_t* name)
   PRECONDITION("Valid output buffer", cName != 0);
   PRECONDITION("Valid output buffer size", length > 0);
 
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   size_t status =
 #endif
   wcstombs(cName, name, length);

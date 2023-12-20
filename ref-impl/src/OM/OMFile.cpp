@@ -96,7 +96,7 @@ OMFile* OMFile::openExistingRead(const wchar_t* fileName,
   PRECONDITION("Valid dictionary", dictionary != 0);
 
   OMStoredObjectEncoding encoding;
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   bool result =
 #endif
   isRecognized(fileName, encoding);
@@ -162,7 +162,7 @@ OMFile* OMFile::openExistingModify(const wchar_t* fileName,
   PRECONDITION("Valid dictionary", dictionary != 0);
 
   OMStoredObjectEncoding encoding;
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   bool result =
 #endif
   isRecognized(fileName, encoding);
@@ -1465,7 +1465,7 @@ void OMFile::openRead(void)
 	// if client said DontCare, get from isRecognized(_rawStorage, _encoding)
 	if( nullOMStoredObjectEncoding == _encoding )
 	{
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
 		bool result =
 #endif
 		isRecognized(_rawStorage, _encoding);
@@ -1478,7 +1478,7 @@ void OMFile::openRead(void)
 		// else get exact:  findfactory->isRecognized(_rawStorage)
 		factory = findFactory(_encoding);
 		ASSERT("Recognized file encoding", factory != 0);
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
 		bool result =
 #endif
 		factory->isRecognized(_rawStorage);
@@ -1497,7 +1497,7 @@ void OMFile::openModify(void)
 	// if client said DontCare, get from isRecognized(_rawStorage, _encoding)
 	if( nullOMStoredObjectEncoding == _encoding )
 	{
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
 		bool result =
 #endif
 		isRecognized(_rawStorage, _encoding);
@@ -1510,7 +1510,7 @@ void OMFile::openModify(void)
 		// else get exact:  findfactory->isRecognized(_rawStorage)
 		factory = findFactory(_encoding);
 		ASSERT("Recognized file encoding", factory != 0);
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
 		bool result =
 #endif
 		factory->isRecognized(_rawStorage);

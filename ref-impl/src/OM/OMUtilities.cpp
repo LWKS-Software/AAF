@@ -250,7 +250,7 @@ void convertWideStringToString(char*  result,
   if (length > (resultSize - 1)) {
     length = resultSize - 1;
   }
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   size_t status =
 #endif
   wcstou8s(result, string, resultSize);
@@ -268,7 +268,7 @@ void convertStringToWideString(wchar_t* result,
   if (length > (resultSize - 1)) {
     length = resultSize - 1;
   }
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   size_t status =
 #endif
   u8stowcs(result, string, resultSize);
@@ -283,7 +283,7 @@ char* convertWideString(const wchar_t* string)
   size_t length = lengthOfWideString(string);
   char* result = new char[length + 1];
   ASSERT("Valid heap pointer", result != 0);
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   size_t status =
 #endif
   wcstou8s(result, string, length + 1);
@@ -300,7 +300,7 @@ wchar_t* convertString(const char* string)
   size_t length = strlen(string);
   wchar_t* result = new wchar_t[length + 1];
   ASSERT("Valid heap pointer", result != 0);
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
   size_t status =
 #endif
   u8stowcs(result, string, length + 1);
@@ -1026,7 +1026,7 @@ int wremove(const wchar_t* fileName)
   } else {
 #endif
     char cFileName[FILENAME_MAX];
-#if defined(PARAMETER_VALIDATION)
+#if defined(OM_PARAMETER_VALIDATION)
     size_t status =
 #endif
     wcstou8s(cFileName, fileName, FILENAME_MAX);
